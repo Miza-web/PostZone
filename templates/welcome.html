@@ -1,0 +1,107 @@
+{% include "layout.html" %}
+{% block content %}{% endblock %}
+
+<body class="welcomescreen">
+  <div class="failmessage">
+  {% if message %}
+  {% if type == 'error' %}
+  <script>
+  toastr.error('Incorrect Credentials', 'Login Failed'); 
+  </script> 
+  {% endif %}
+  {% if type == 'success' %}
+  <script>
+  toastr.success('You can now log in', 'Registration successful'); 
+  </script> 
+  {% endif %}
+  {% endif %}
+  </div>
+  <div class="logo">
+  <a class="navbar-brand">
+    <img src="{{url_for('static', filename='assets/logo.png')}}" alt="logo" style="height: 150px;">
+  </a>
+  </div>
+
+<div class="container-fluid">
+  <div class="row h-500">
+    <div class="col my-auto">
+    </div>
+    <div class="col pt-5 text-center">
+      <button type="button" class="btn btn-primary btn-welcome" data-toggle="modal" data-target="#loginModal">
+      Sign in
+      </button>
+    </div>
+    </div>
+    </div>
+    <div class="container-fluid">
+      <div class="row h-500">
+        <div class="col my-auto">
+        </div>
+        <div class="col pt-5 text-center">
+          <button type="button" class="btn btn-primary btn-welcome" data-toggle="modal" data-target="#registerModal">
+          Register
+          </button>
+        </div>
+        </div>
+        </div>
+
+
+
+
+
+
+
+<div class="modal" id="loginModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Sign in</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="{{ url_for('login') }}" method="POST">
+          <p>Username:</p><input type="text" name="user" required/>
+          <p>Password:</p><input type="password" name="pass" required/>
+          <br />
+          <br><input type="submit" value="Sign In" />
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Back</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="registerModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Register an account</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="{{ url_for('register') }}" method="post">
+          <p>Username:</p><input type="text" name="user" required/>
+          <p>Password:</p><input type="password" name="pass" required/>
+          <p>E-mail:</p><input type="text" name="email" placeholder="a@a.com" required/>
+          <br />
+          <br><input type="submit" value="Register" />
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Back</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+  </div>
+</div>
+</body>
+</html>

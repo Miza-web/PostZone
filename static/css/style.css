@@ -1,0 +1,23 @@
+.welcomescreen { 
+    background: url(../assets/welcome.jpg) no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+  }
+.btn-welcome {
+    background-color: blanchedalmond;
+    color: black;
+    font-size: 25px;
+    text-align: center;
+    width: 300px;
+}
+.failmessage {
+  color: red;
+}
+.shadow {
+  box-shadow: 5px 5px 5px grey;
+}
+.posts {
+  width: 800px;
+}
