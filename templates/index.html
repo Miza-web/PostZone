@@ -7,7 +7,14 @@
 toastr.success('Success', 'Post Created'); 
 </script> 
 {% endif %}
+<div class="row h-500 acc_snippet">
+  <div class="col-4 shadow p-3 mb-5 rounded">
+      <b>Display name:</b> {{ user.username }}<br>
+      <b>User e-mail:</b> {{ user.email }}<br>
+      <b>Total posts:</b>
 
+  </div>
+</div>
 <div class="container-fluid create-post">
   <div class="row h-500">
     <div class="col">

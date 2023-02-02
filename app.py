@@ -46,7 +46,8 @@ def posts():
    if not session.get('username'):
     return redirect(url_for('home'))
    posts=query_db('SELECT * FROM posts ORDER BY created_at DESC')
-   return render_template('index.html', posts = posts)
+   user=query_db('SELECT * FROM users WHERE username = ?', [session['username']], True)
+   return render_template('index.html', posts = posts, user = user)
 
 
 @app.route("/register", methods=['post'])
