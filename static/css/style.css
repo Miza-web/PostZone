@@ -21,3 +21,15 @@
 .posts {
   width: 800px;
 }
+.create-post {
+  margin-left: auto;
+  margin-right: auto;
+  justify-content: center;
+  text-align: center;
+  padding-top: 20px;
+}
+.nav-main {
+  background-color: rgb(255, 255, 255);
+  border-bottom: 2px solid orange;
+  height: 75px;
+}

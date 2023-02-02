@@ -38,7 +38,8 @@ def logout():
 @app.route("/profile")
 def profile():
     user=query_db('SELECT * FROM users WHERE username = ?', [session['username']], True)
-    return render_template('profile.html', user = user)
+    user_posts=query_db('SELECT * FROM posts WHERE by_user = ?', [session['username']], 'ORDER BY created_at DESC')
+    return render_template('profile.html', user = user, user_posts = user_posts)
 
 @app.route("/index")
 def posts():
@@ -59,6 +60,10 @@ def register():
     insert_db('INSERT INTO users (username, password, email) VALUES (?, ?, ?)', (username, hashed_password, email))
 
     return render_template('welcome.html', message='User Registered', type='success')
+
+@app.route("/news")
+def news():
+    return render_template('news.html')
 
 @app.route("/post_submit", methods=['post'])
 def post_submit():
