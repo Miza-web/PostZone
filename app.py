@@ -38,7 +38,7 @@ def logout():
 @app.route("/profile")
 def profile():
     user=query_db('SELECT * FROM users WHERE username = ?', [session['username']], True)
-    user_posts=query_db('SELECT * FROM posts WHERE by_user = ?', [session['username']], 'ORDER BY created_at DESC')
+    user_posts=query_db('SELECT * FROM posts WHERE by_user = ?', [session['username']])
     return render_template('profile.html', user = user, user_posts = user_posts)
 
 @app.route("/index")
