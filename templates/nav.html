@@ -1,0 +1,32 @@
+<nav class="navbar nav-main navbar-expand-lg navbar-light">
+    <a class="navbar-brand">
+      <img src="{{url_for('static', filename='assets/logo.png')}}" alt="logo" style="height: 75px;">
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('posts') }}">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('profile') }}">Profile</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('news') }}">News</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('logout') }}">Log Out</a>
+        </li>
+      </ul>
+    </div>
+    <div class="welcome-session">
+      <p>Welcome, {{session.username}}</p>
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('account_settings') }}">Account</a>
+        </li>
+      </ul>
+    </div>
+  </nav>

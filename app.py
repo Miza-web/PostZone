@@ -66,6 +66,10 @@ def register():
 def news():
     return render_template('news.html')
 
+@app.route("/account_settings")
+def account_settings():
+    return render_template("account_settings.html")
+
 @app.route("/post_submit", methods=['post'])
 def post_submit():
     form = request.form
