@@ -1,0 +1,20 @@
+{% include "layout.html" %}
+{% include "nav.html" %}
+{% block content %}{% endblock %}
+
+<body>
+<div class="container-fluid">
+    <div class="row text-center">
+        <div class="col">
+        <h1>Hello, {{session.username}}</h1>
+        <h3>Make changes to your account</h3>
+        <form action="{{url_for('account_change')}}" method="POST" id="acc_form">
+            <input type="text" placeholder="{{session.username}}" name="username" style="width: 300px" required/><br>
+            <input type="text" placeholder="{{session.password}}" name="password" style="width: 300px" required/><br>
+            <input type="text" placeholder="{{session.email}}" name="email" style="width: 300px" required/><br>
+            <input type="submit" value="Apply Changes" />
+        </form>
+        </div>
+    </div>
+</div>
+</body>

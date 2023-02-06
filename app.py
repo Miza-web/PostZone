@@ -81,6 +81,10 @@ def post_submit():
 
     return redirect(url_for('posts'))
 
+@app.route("/account_change", methods=['post'])
+def account_change():
+    return redirect(url_for('account_settings'))
+
 def insert_db(query, args):
     db = g._database = sqlite3.connect(DATABASE)
     cursor = db.cursor()
