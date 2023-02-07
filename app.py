@@ -87,8 +87,17 @@ def account_change():
 
 @app.route("/admin")
 def admin():
+    return render_template("admin.html")
+
+@app.route("/admin/user")
+def admin_user():
     user_table=query_db('SELECT * FROM users')
-    return render_template("admin.html", user_table = user_table)
+    return render_template("user_database.html", user_table = user_table)
+
+@app.route("/admin/posts")
+def admin_posts():
+    post_table=query_db('SELECT * FROM posts ORDER BY created_at DESC')
+    return render_template("post_database.html", post_table = post_table)
 
 def insert_db(query, args):
     db = g._database = sqlite3.connect(DATABASE)

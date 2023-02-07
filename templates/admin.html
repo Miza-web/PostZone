@@ -6,34 +6,15 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col text-center">
-                <h1>User Database</h1>
+                <a class="admin_link" href="{{ url_for('admin_user') }}">User Database</a>
+                <a class="admin_link" href="{{ url_for('admin_posts') }}">Post Database</a>
+                <a class="admin_link" href="{{ url_for('news') }}">Report System</a>
             </div>
         </div>
     </div>
-    <div class="container-fluid col">
-        <table class="table">
-            <tr>
-                <td>ID</td>
-                <td>Username</td>
-                <td>E-mail Address</td>
-                <td>Edit</td>
-                <td>Delete</td>
-            </tr>
-            <tr>
-                {% for user in user_table %}
-                <td>{{user.ID}}</td>
-                <td>{{user.username}}</td>
-                <td>{{user.email}}</td>
-                <td>Edit</td>
-                <td>Delete</td></tr>
-                {% endfor %}
-            </tr>
-            </table>
 </body>
 
 
 
 
 
-
-{% include "footer.html" %}
