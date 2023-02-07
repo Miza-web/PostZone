@@ -9,6 +9,7 @@
             <td>Content</td>
             <td>Author</td>
             <td>Date</td>
+            <td>Delete</td>
         </tr>
         <tr>
             {% for post in post_table %}
@@ -16,7 +17,8 @@
             <td>{{post.title}}</td>
             <td>{{post.content}}</td>
             <td>{{post.by_user}}</td>
-            <td>{{post.created_at}}</td></tr>
+            <td>{{post.created_at}}</td>
+            <td><button type="button" onClick="{{url_for}}">Delete</td></tr>
             {% endfor %}
         </tr>
         </table>

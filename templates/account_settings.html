@@ -10,7 +10,7 @@
         <h3>Make changes to your account</h3>
         <form action="{{url_for('account_change')}}" method="POST" id="acc_form">
             <input type="text" placeholder="{{session.username}}" name="username" style="width: 300px" required/><br>
-            <input type="text" placeholder="{{session.password}}" name="password" style="width: 300px" required/><br>
+            <input type="password" placeholder="{{session.password}}" name="password" style="width: 300px" required/><br>
             <input type="text" placeholder="{{session.email}}" name="email" style="width: 300px" required/><br>
             <input type="submit" value="Apply Changes" />
         </form>

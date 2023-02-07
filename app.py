@@ -28,7 +28,7 @@ def login():
         return redirect(url_for('posts'))
 
 
-    return render_template('welcome.html', message='Incorrect Credentials', type='error')
+    return render_template('welcome.html', message='Incorrect Credentials', type='error', user = user)
 
 @app.route("/logout")
 def logout():
@@ -37,6 +37,8 @@ def logout():
 
 @app.route("/profile")
 def profile():
+    if not session.get('username'):
+        return redirect(url_for('home'))
     user=query_db('SELECT * FROM users WHERE username = ?', [session['username']], True)
     user_posts=query_db('SELECT * FROM posts WHERE by_user = ?', [session['username']])
     return render_template('profile.html', user = user, user_posts = user_posts)
@@ -64,10 +66,14 @@ def register():
 
 @app.route("/news")
 def news():
+    if not session.get('username'):
+        return redirect(url_for('home'))
     return render_template('news.html')
 
 @app.route("/account_settings")
 def account_settings():
+    if not session.get('username'):
+        return redirect(url_for('home'))
     return render_template("account_settings.html")
 
 @app.route("/post_submit", methods=['post'])
@@ -87,17 +93,28 @@ def account_change():
 
 @app.route("/admin")
 def admin():
+    if not session.get('username'):
+        return redirect(url_for('home'))
     return render_template("admin.html")
 
 @app.route("/admin/user")
 def admin_user():
+    if not session.get('username'):
+        return redirect(url_for('home'))
     user_table=query_db('SELECT * FROM users')
     return render_template("user_database.html", user_table = user_table)
 
 @app.route("/admin/posts")
 def admin_posts():
+    if not session.get('username'):
+        return redirect(url_for('home'))
     post_table=query_db('SELECT * FROM posts ORDER BY created_at DESC')
     return render_template("post_database.html", post_table = post_table)
+
+@app.route("/admin/edit_user")
+def edit_user():
+    user_entry=query_db('SELECT FROM users WHERE username = user.username')
+    return redirect(url_for('user_database.html'), user_entry = user_entry)
 
 def insert_db(query, args):
     db = g._database = sqlite3.connect(DATABASE)

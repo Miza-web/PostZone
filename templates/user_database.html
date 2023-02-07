@@ -16,8 +16,35 @@
             <td>{{user.username}}</td>
             <td>{{user.email}}</td>
             <td>Edit</td>
-            <td>Delete</td></tr>
+            {#<td><button type="button" class="" data-toggle="modal" data-target="#editModal">Edit</button></td>#}
+            <td><button type="button" onClick="{{url_for}}">Delete</td></tr>
             {% endfor %}
         </tr>
         </table>
     </div>
+
+{#
+    <div class="modal" id="editModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Edit a user</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form action="{{ url_for('edit_user') }}" method="POST">
+                <p>Username:</p><input type="text" placeholder="{{user.username}}" name="user" required/>
+                <p>Password:</p><input type="password" name="pass" required/>
+                <br />
+                <br><input type="submit" value="Sign In" />
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Back</button>
+            </div>
+          </div>
+        </div>
+      </div>
+#}
