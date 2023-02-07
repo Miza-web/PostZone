@@ -7,11 +7,11 @@
     <div class="row text-center">
         <div class="col">
         <h1>Hello, {{session.username}}</h1>
-        <h3>Make changes to your account</h3>
-        <form action="{{url_for('account_change')}}" method="POST" id="acc_form">
-            <input type="text" placeholder="{{session.username}}" name="username" style="width: 300px" required/><br>
-            <input type="password" placeholder="{{session.password}}" name="password" style="width: 300px" required/><br>
-            <input type="text" placeholder="{{session.email}}" name="email" style="width: 300px" required/><br>
+        <h3>Update your credentials</h3>
+        <form action="{{ url_for('account_update') }}" method="POST" id="acc_form">
+            <a>Username: </a><input type="text" placeholder="{{user.username}}" name="user" style="width: 300px"/><br>
+            <a>Password: </a><input type="password" placeholder="********" name="pass" style="width: 300px"/><br>
+            <a>E-mail: </a><input type="text" placeholder="{{user.email}}" name="email" style="width: 300px"/><br>
             <input type="submit" value="Apply Changes" />
         </form>
         </div>

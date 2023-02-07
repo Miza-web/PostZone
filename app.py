@@ -74,7 +74,8 @@ def news():
 def account_settings():
     if not session.get('username'):
         return redirect(url_for('home'))
-    return render_template("account_settings.html")
+    user=query_db('SELECT * FROM users WHERE username = ?', [session['username']], True)
+    return render_template("account_settings.html", user = user)
 
 @app.route("/post_submit", methods=['post'])
 def post_submit():
@@ -87,8 +88,16 @@ def post_submit():
 
     return redirect(url_for('posts'))
 
-@app.route("/account_change", methods=['post'])
-def account_change():
+@app.route("/account_update", methods=['post'])
+def account_update():
+    form = request.form
+    username = form.get('user')
+    password = form.get('pass')
+    email = form.get('email')
+    hashed_password = generate_password_hash(password)
+
+    insert_db('UPDATE users SET (username, password, email) VALUES (?, ?, ?) WHERE username = ?', (username, hashed_password, email))
+
     return redirect(url_for('account_settings'))
 
 @app.route("/admin")
