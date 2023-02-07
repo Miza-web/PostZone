@@ -7,7 +7,6 @@
             <td>ID</td>
             <td>Username</td>
             <td>E-mail Address</td>
-            <td>Edit</td>
             <td>Delete</td>
         </tr>
         <tr>
@@ -15,7 +14,6 @@
             <td>{{user.ID}}</td>
             <td>{{user.username}}</td>
             <td>{{user.email}}</td>
-            <td>Edit</td>
             {#<td><button type="button" class="" data-toggle="modal" data-target="#editModal">Edit</button></td>#}
             <td><button type="button" onClick="{{url_for}}">Delete</td></tr>
             {% endfor %}
