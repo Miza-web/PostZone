@@ -3,7 +3,32 @@
 {% block content %}{% endblock %}
 
 <body>
-
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col text-center">
+                <h1>User Database</h1>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid col">
+        <table class="table">
+            <tr>
+                <td>ID</td>
+                <td>Username</td>
+                <td>E-mail Address</td>
+                <td>Edit</td>
+                <td>Delete</td>
+            </tr>
+            <tr>
+                {% for user in user_table %}
+                <td>{{user.ID}}</td>
+                <td>{{user.username}}</td>
+                <td>{{user.email}}</td>
+                <td>Edit</td>
+                <td>Delete</td></tr>
+                {% endfor %}
+            </tr>
+            </table>
 </body>
 
 

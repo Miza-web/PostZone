@@ -87,7 +87,8 @@ def account_change():
 
 @app.route("/admin")
 def admin():
-    return render_template("admin.html")
+    user_table=query_db('SELECT * FROM users')
+    return render_template("admin.html", user_table = user_table)
 
 def insert_db(query, args):
     db = g._database = sqlite3.connect(DATABASE)
