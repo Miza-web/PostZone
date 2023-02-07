@@ -85,6 +85,10 @@ def post_submit():
 def account_change():
     return redirect(url_for('account_settings'))
 
+@app.route("/admin")
+def admin():
+    return render_template("admin.html")
+
 def insert_db(query, args):
     db = g._database = sqlite3.connect(DATABASE)
     cursor = db.cursor()

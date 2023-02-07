@@ -55,3 +55,9 @@ body {
 .acc_snippet {
   width: 50%;
 }
+.footer-custom {
+  border-top: 2px solid orange;
+}
+.page-footer {
+  padding-top: 200px;
+}
