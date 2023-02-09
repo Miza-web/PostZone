@@ -88,7 +88,7 @@ def post_submit():
     user = session['username']  
     keywords = ['vaccine', 'hoax', 'covid']
 
-    if re.compile('|'.join(keywords),re.IGNORECASE).search(post_content): #re.IGNORECASE makes the search case-insensitive
+    if re.compile('|'.join(keywords),re.IGNORECASE).search(post_content):
         return redirect(url_for('posts'))
     else:
         insert_db('INSERT INTO posts (title, content, by_user) VALUES (?, ?, ?)', (title, post_content, user))
