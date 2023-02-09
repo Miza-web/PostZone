@@ -9,9 +9,9 @@
         <h1>Hello, {{session.username}}</h1>
         <h3>Update your credentials</h3>
         <form action="{{ url_for('account_update') }}" method="POST" id="acc_form">
-            <a>Username: </a><input type="text" placeholder="{{user.username}}" name="user" style="width: 300px"/><br>
-            <a>Password: </a><input type="password" placeholder="********" name="pass" style="width: 300px"/><br>
-            <a>E-mail: </a><input type="text" placeholder="{{user.email}}" name="email" style="width: 300px"/><br>
+            <a>Username: </a><input type="text" placeholder="{{user.username}}" name="user" style="width: 300px" required/><br>
+            <a>Password: </a><input type="password" placeholder="********" name="pass" style="width: 300px" required/><br>
+            <a>E-mail: </a><input type="text" placeholder="{{user.email}}" name="email" style="width: 300px" required/><br>
             <input type="submit" value="Apply Changes" />
         </form>
         </div>

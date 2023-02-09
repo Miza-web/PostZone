@@ -92,13 +92,15 @@ def post_submit():
 def account_update():
     form = request.form
     username = form.get('user')
+    user = session['username']
     password = form.get('pass')
     email = form.get('email')
     hashed_password = generate_password_hash(password)
 
-    insert_db('UPDATE users SET (username, password, email) VALUES (?, ?, ?) WHERE username = ?', (username, hashed_password, email))
+    insert_db('UPDATE users SET username = ?, password  = ?, email = ? WHERE username = ?', (username, hashed_password, email, user))
 
-    return redirect(url_for('account_settings'))
+    session.pop('username')
+    return redirect(url_for('home')) 
 
 @app.route("/admin")
 def admin():
