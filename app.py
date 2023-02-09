@@ -40,7 +40,9 @@ def profile():
     if not session.get('username'):
         return redirect(url_for('home'))
     user=query_db('SELECT * FROM users WHERE username = ?', [session['username']], True)
-    user_posts=query_db('SELECT * FROM posts WHERE by_user = ?', [session['username']])
+
+    user_posts=query_db('SELECT * FROM posts WHERE by_user = ? ORDER BY created_at DESC', [session['username']])
+
     return render_template('profile.html', user = user, user_posts = user_posts)
 
 @app.route("/index")
