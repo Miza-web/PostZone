@@ -1,6 +1,7 @@
 from sqlite3.dbapi2 import Cursor, connect
 from flask import Flask, config, render_template, request, g, session, url_for, redirect
 import sqlite3
+import re
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import redirect
 app = Flask(__name__)
@@ -83,12 +84,15 @@ def account_settings():
 def post_submit():
     form = request.form
     title = form.get('title')
-    content = form.get('content')
-    user = session['username']
+    post_content = form.get('content')
+    user = session['username']  
+    keywords = ['vaccine', 'hoax', 'covid']
 
-    insert_db('INSERT INTO posts (title, content, by_user) VALUES (?, ?, ?)', (title, content, user))
-
-    return redirect(url_for('posts'))
+    if re.compile('|'.join(keywords),re.IGNORECASE).search(post_content): #re.IGNORECASE makes the search case-insensitive
+        return redirect(url_for('posts'))
+    else:
+        insert_db('INSERT INTO posts (title, content, by_user) VALUES (?, ?, ?)', (title, post_content, user))
+        return redirect(url_for('posts'))
 
 @app.route("/account_update", methods=['post'])
 def account_update():
