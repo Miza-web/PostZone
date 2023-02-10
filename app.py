@@ -89,9 +89,10 @@ def post_submit():
     keywords = ['vaccine', 'hoax', 'covid']
 
     if re.compile('|'.join(keywords),re.IGNORECASE).search(post_content):
+        insert_db('INSERT INTO posts (title, content, by_user, flagged) VALUES (?, ?, ?, ?)', (title, post_content, user, "yes"))
         return redirect(url_for('posts'))
     else:
-        insert_db('INSERT INTO posts (title, content, by_user) VALUES (?, ?, ?)', (title, post_content, user))
+        insert_db('INSERT INTO posts (title, content, by_user, flagged) VALUES (?, ?, ?, ?)', (title, post_content, user, "no"))
         return redirect(url_for('posts'))
 
 @app.route("/account_update", methods=['post'])

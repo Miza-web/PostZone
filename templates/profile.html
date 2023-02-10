@@ -11,6 +11,9 @@
     </div>
     {% for user_post in user_posts %}
     <div class="shadow mx-auto posts p-3 mb-5 rounded">
+    {% if user_post.flagged == "yes" %}
+    <h1>FLAGGED</h1>
+    {% endif %}
     <p align="right">{{  user_post.created_at  }}</p>
     <h4>{{ user_post.by_user }}</h4>
     <h5>{{ user_post.title }}</h5>

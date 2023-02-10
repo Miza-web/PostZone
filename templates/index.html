@@ -31,6 +31,9 @@ toastr.success('Success', 'Post Created');
 </div>
     {% for post in posts %}
     <div class="shadow mx-auto posts p-3 mb-5 rounded">
+    {% if post.flagged == "yes" %}
+    <h1>FLAGGED</h1>
+    {% endif %}
     <p align="right">{{  post.created_at  }}</p>
     <h4>{{ post.by_user }}</h4>
     <h5>{{ post.title }}</h5>
