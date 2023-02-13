@@ -86,7 +86,7 @@ def post_submit():
     title = form.get('title')
     post_content = form.get('content')
     user = session['username']  
-    keywords = ['vaccine', 'hoax', 'covid']
+    keywords = ['vaccine', 'hoax', 'covid', 'coronavirus', 'virus']
 
     if re.compile('|'.join(keywords),re.IGNORECASE).search(post_content):
         insert_db('INSERT INTO posts (title, content, by_user, flagged) VALUES (?, ?, ?, ?)', (title, post_content, user, "yes"))
