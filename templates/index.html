@@ -31,6 +31,9 @@ toastr.success('Success', 'Post Created');
 </div> 
     {% for post in posts %}
     <div class="shadow mx-auto posts p-3 mb-5 rounded">
+    {% if post.blacklisted == "yes" %}
+    <h5>The following account has been blacklisted due to too many violations!</h5>
+    {% endif %}
     {% if post.flagged == "yes" %}
     <div class="flagged_post">
       <h5>The following post might contain misleading information about the COVID-19 pandemic. Please refer to our resources for more information.</h5>

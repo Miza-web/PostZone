@@ -87,13 +87,28 @@ def post_submit():
     post_content = form.get('content')
     user = session['username']  
     keywords = ['vaccine', 'hoax', 'covid', 'coronavirus', 'virus']
+    list=query_db('SELECT * FROM users WHERE username = ?', [session['username']], True)
+
+    if list['whitelisted'] == "yes":
+            insert_db('INSERT INTO posts (title, content, by_user, flagged) VALUES (?, ?, ?, ?)', (title, post_content, user, "no"))
+            return redirect(url_for('posts'))
+
+    if list['blacklisted'] == "yes":
+        if re.compile('|'.join(keywords),re.IGNORECASE).search(post_content):
+            insert_db('INSERT INTO posts (title, content, by_user, flagged, blacklisted) VALUES (?, ?, ?, ?, ?)', (title, post_content, user, "yes", "yes"))
+            return redirect(url_for('posts'))
+        else:
+            insert_db('INSERT INTO posts (title, content, by_user, flagged, blacklisted) VALUES (?, ?, ?, ?, ?)', (title, post_content, user, "no", "yes"))
+            return redirect(url_for('posts'))
+
 
     if re.compile('|'.join(keywords),re.IGNORECASE).search(post_content):
-        insert_db('INSERT INTO posts (title, content, by_user, flagged) VALUES (?, ?, ?, ?)', (title, post_content, user, "yes"))
-        return redirect(url_for('posts'))
+            insert_db('INSERT INTO posts (title, content, by_user, flagged) VALUES (?, ?, ?, ?)', (title, post_content, user, "yes"))
+            return redirect(url_for('posts'))
     else:
-        insert_db('INSERT INTO posts (title, content, by_user, flagged) VALUES (?, ?, ?, ?)', (title, post_content, user, "no"))
-        return redirect(url_for('posts'))
+            insert_db('INSERT INTO posts (title, content, by_user, flagged) VALUES (?, ?, ?, ?)', (title, post_content, user, "no"))
+            return redirect(url_for('posts'))
+
 
 @app.route("/account_update", methods=['post'])
 def account_update():
