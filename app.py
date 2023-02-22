@@ -80,21 +80,26 @@ def account_settings():
     user=query_db('SELECT * FROM users WHERE username = ?', [session['username']], True)
     return render_template("account_settings.html", user = user)
 
+misinformation_pattern = r"(covid|vaccine|pandemic|coronavirus).*(hoax|fake|misinformation|autism)"
+
+def flag_misinformation(text):
+    match = re.search(misinformation_pattern, text, re.IGNORECASE)
+    return match is not None
+
 @app.route("/post_submit", methods=['post'])
 def post_submit():
-    form = request.form
-    title = form.get('title')
-    post_content = form.get('content')
+    post_content = request.form['content']
+    title = request.form['title']
     user = session['username']  
-    keywords = ['vaccine', 'hoax', 'covid', 'coronavirus', 'virus']
+
     list=query_db('SELECT * FROM users WHERE username = ?', [session['username']], True)
 
     if list['whitelisted'] == "yes":
-            insert_db('INSERT INTO posts (title, content, by_user, flagged) VALUES (?, ?, ?, ?)', (title, post_content, user, "no"))
-            return redirect(url_for('posts'))
+        insert_db('INSERT INTO posts (title, content, by_user, flagged) VALUES (?, ?, ?, ?)', (title, post_content, user, "no"))
+        return redirect(url_for('posts'))
 
     if list['blacklisted'] == "yes":
-        if re.compile('|'.join(keywords),re.IGNORECASE).search(post_content):
+        if flag_misinformation(post_content):
             insert_db('INSERT INTO posts (title, content, by_user, flagged, blacklisted) VALUES (?, ?, ?, ?, ?)', (title, post_content, user, "yes", "yes"))
             return redirect(url_for('posts'))
         else:
@@ -102,13 +107,12 @@ def post_submit():
             return redirect(url_for('posts'))
 
 
-    if re.compile('|'.join(keywords),re.IGNORECASE).search(post_content):
-            insert_db('INSERT INTO posts (title, content, by_user, flagged) VALUES (?, ?, ?, ?)', (title, post_content, user, "yes"))
-            return redirect(url_for('posts'))
+    if flag_misinformation(post_content):
+        insert_db('INSERT INTO posts (title, content, by_user, flagged) VALUES (?, ?, ?, ?)', (title, post_content, user, "yes"))
+        return redirect(url_for('posts'))
     else:
-            insert_db('INSERT INTO posts (title, content, by_user, flagged) VALUES (?, ?, ?, ?)', (title, post_content, user, "no"))
-            return redirect(url_for('posts'))
-
+        insert_db('INSERT INTO posts (title, content, by_user, flagged) VALUES (?, ?, ?, ?)', (title, post_content, user, "no"))
+        return redirect(url_for('posts'))
 
 @app.route("/account_update", methods=['post'])
 def account_update():
