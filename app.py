@@ -80,7 +80,7 @@ def account_settings():
     user=query_db('SELECT * FROM users WHERE username = ?', [session['username']], True)
     return render_template("account_settings.html", user = user)
 
-covid_pattern = r"(covid|pandemic|coronavirus|virus|5g).*(hoax|fake|misinformation|autism|)"
+covid_pattern = r"(covid|pandemic|coronavirus|virus|5g).*(hoax|fake|autism|doesn't exist)"
 vaccine_pattern = r"(vaccine|pfizer|moderna|novavax).*(autism|fake|hoax|doesn't work|don't work)"
 tests_pattern = r"(lateral flow|antigen|pcr).*(doesn't work|don't work|fake|hoax)"
 cures_pattern = r"(ivermectin|antibiotics|alcohol).*(helps|cures|works)"
@@ -88,6 +88,15 @@ cures_pattern = r"(ivermectin|antibiotics|alcohol).*(helps|cures|works)"
 
 def flag_covid_misinformation(text):
     match = re.search(covid_pattern, text, re.IGNORECASE)
+    return match is not None
+def flag_vaccine_misinformation(text):
+    match = re.search(vaccine_pattern, text, re.IGNORECASE)
+    return match is not None
+def flag_tests_misinformation(text):
+    match = re.search(tests_pattern, text, re.IGNORECASE)
+    return match is not None
+def flag_cures_misinformation(text):
+    match = re.search(cures_pattern, text, re.IGNORECASE)
     return match is not None
 
 @app.route("/post_submit", methods=['post'])
@@ -112,7 +121,16 @@ def post_submit():
 
 
     if flag_covid_misinformation(post_content):
-        insert_db('INSERT INTO posts (title, content, by_user, flagged) VALUES (?, ?, ?, ?)', (title, post_content, user, "yes"))
+        insert_db('INSERT INTO posts (title, content, by_user, flag_covid) VALUES (?, ?, ?, ?)', (title, post_content, user, "yes"))
+        return redirect(url_for('posts'))
+    elif flag_vaccine_misinformation(post_content):
+        insert_db('INSERT INTO posts (title, content, by_user, flag_vaccine) VALUES (?, ?, ?, ?)', (title, post_content, user, "yes"))
+        return redirect(url_for('posts'))
+    elif flag_tests_misinformation(post_content):
+        insert_db('INSERT INTO posts (title, content, by_user, flag_tests) VALUES (?, ?, ?, ?)', (title, post_content, user, "yes"))
+        return redirect(url_for('posts'))
+    elif flag_cures_misinformation(post_content):
+        insert_db('INSERT INTO posts (title, content, by_user, flag_cures) VALUES (?, ?, ?, ?)', (title, post_content, user, "yes"))
         return redirect(url_for('posts'))
     else:
         insert_db('INSERT INTO posts (title, content, by_user, flagged) VALUES (?, ?, ?, ?)', (title, post_content, user, "no"))
