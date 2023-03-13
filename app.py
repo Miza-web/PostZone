@@ -80,10 +80,14 @@ def account_settings():
     user=query_db('SELECT * FROM users WHERE username = ?', [session['username']], True)
     return render_template("account_settings.html", user = user)
 
-misinformation_pattern = r"(covid|vaccine|pandemic|coronavirus).*(hoax|fake|misinformation|autism)"
+covid_pattern = r"(covid|pandemic|coronavirus|virus|5g).*(hoax|fake|misinformation|autism|)"
+vaccine_pattern = r"(vaccine|pfizer|moderna|novavax).*(autism|fake|hoax|doesn't work|don't work)"
+tests_pattern = r"(lateral flow|antigen|pcr).*(doesn't work|don't work|fake|hoax)"
+cures_pattern = r"(ivermectin|antibiotics|alcohol).*(helps|cures|works)"
 
-def flag_misinformation(text):
-    match = re.search(misinformation_pattern, text, re.IGNORECASE)
+
+def flag_covid_misinformation(text):
+    match = re.search(covid_pattern, text, re.IGNORECASE)
     return match is not None
 
 @app.route("/post_submit", methods=['post'])
@@ -99,7 +103,7 @@ def post_submit():
         return redirect(url_for('posts'))
 
     if list['blacklisted'] == "yes":
-        if flag_misinformation(post_content):
+        if flag_covid_misinformation(post_content):
             insert_db('INSERT INTO posts (title, content, by_user, flagged, blacklisted) VALUES (?, ?, ?, ?, ?)', (title, post_content, user, "yes", "yes"))
             return redirect(url_for('posts'))
         else:
@@ -107,7 +111,7 @@ def post_submit():
             return redirect(url_for('posts'))
 
 
-    if flag_misinformation(post_content):
+    if flag_covid_misinformation(post_content):
         insert_db('INSERT INTO posts (title, content, by_user, flagged) VALUES (?, ?, ?, ?)', (title, post_content, user, "yes"))
         return redirect(url_for('posts'))
     else:
