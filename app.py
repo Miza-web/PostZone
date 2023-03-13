@@ -83,7 +83,7 @@ def account_settings():
 covid_pattern = r"(covid|pandemic|coronavirus|virus|5g).*(hoax|fake|autism|doesn't exist)"
 vaccine_pattern = r"(vaccine|pfizer|moderna|novavax).*(autism|fake|hoax|doesn't work|don't work)"
 tests_pattern = r"(lateral flow|antigen|pcr).*(doesn't work|don't work|fake|hoax)"
-cures_pattern = r"(ivermectin|antibiotics|alcohol).*(helps|cures|works)"
+cures_pattern = r"(ivermectin|antibiotics|alcohol).*(helps|cures|works|cure)"
 
 
 def flag_covid_misinformation(text):
@@ -113,10 +113,19 @@ def post_submit():
 
     if list['blacklisted'] == "yes":
         if flag_covid_misinformation(post_content):
-            insert_db('INSERT INTO posts (title, content, by_user, flagged, blacklisted) VALUES (?, ?, ?, ?, ?)', (title, post_content, user, "yes", "yes"))
+            insert_db('INSERT INTO posts (title, content, by_user, flag_covid, blacklisted) VALUES (?, ?, ?, ?, ?)', (title, post_content, user, "yes", "yes"))
+            return redirect(url_for('posts'))
+        elif flag_vaccine_misinformation(post_content):
+            insert_db('INSERT INTO posts (title, content, by_user, flag_vaccine, blacklisted) VALUES (?, ?, ?, ?, ?)', (title, post_content, user, "yes", "yes"))
+            return redirect(url_for('posts'))
+        elif flag_tests_misinformation(post_content):
+            insert_db('INSERT INTO posts (title, content, by_user, flag_tests, blacklisted) VALUES (?, ?, ?, ?, ?)', (title, post_content, user, "yes", "yes"))
+            return redirect(url_for('posts'))
+        elif flag_cures_misinformation(post_content):
+            insert_db('INSERT INTO posts (title, content, by_user, flag_cures, blacklister) VALUES (?, ?, ?, ?, ?)', (title, post_content, user, "yes", "yes"))
             return redirect(url_for('posts'))
         else:
-            insert_db('INSERT INTO posts (title, content, by_user, flagged, blacklisted) VALUES (?, ?, ?, ?, ?)', (title, post_content, user, "no", "yes"))
+            insert_db('INSERT INTO posts (title, content, by_user, blacklisted) VALUES (?, ?, ?, ?)', (title, post_content, user, "yes"))
             return redirect(url_for('posts'))
 
 
@@ -133,7 +142,7 @@ def post_submit():
         insert_db('INSERT INTO posts (title, content, by_user, flag_cures) VALUES (?, ?, ?, ?)', (title, post_content, user, "yes"))
         return redirect(url_for('posts'))
     else:
-        insert_db('INSERT INTO posts (title, content, by_user, flagged) VALUES (?, ?, ?, ?)', (title, post_content, user, "no"))
+        insert_db('INSERT INTO posts (title, content, by_user) VALUES (?, ?, ?)', (title, post_content, user))
         return redirect(url_for('posts'))
 
 @app.route("/account_update", methods=['post'])
