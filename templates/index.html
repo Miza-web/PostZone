@@ -76,7 +76,10 @@ toastr.success('Success', 'Post Created');
     </a>
     <h5>{{ post.title }}</h5>
     {{ post.content }}<br/>
-    <button class="report_button" type="button">Report</button>
+    <form method="post" action="{{ url_for('post_report') }}">
+      <input type="hidden" name="post_ID" value="{{ post.ID }}">
+      <button class="report_button" type="submit">Report</button>
+    </form>
     </div>
     <br/>
     {% endfor %}

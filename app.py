@@ -165,6 +165,13 @@ def admin():
         return redirect(url_for('home'))
     return render_template("admin.html")
 
+@app.route ("/admin/reports")
+def admin_reports():
+    if not session.get('username'):
+        return redirect(url_for('home'))
+    report_table=query_db('SELECT * FROM posts WHERE reported = 1 ORDER BY created_at DESC')
+    return render_template("report_database.html", report_table=report_table)
+
 @app.route("/admin/user")
 def admin_user():
     if not session.get('username'):
@@ -201,6 +208,14 @@ def user_profile(username):
     user_posts=query_db('SELECT * FROM posts WHERE by_user = ? ORDER BY created_at DESC', (username,))
 
     return render_template('user_profile.html', user=user, user_posts=user_posts)
+
+@app.route('/report', methods=['POST'])
+def post_report():
+    post_ID = request.form['post_ID']
+
+    insert_db('UPDATE posts SET reported = ? WHERE ID = ?', (1, post_ID))
+    return redirect(url_for('posts'))
+
 
 def insert_db(query, args):
     db = g._database = sqlite3.connect(DATABASE)

@@ -1,0 +1,28 @@
+{% include "admin.html" %}
+{% block content %}{% endblock %}
+
+<center><h2>Reported Posts</h2></center>
+<div class="container-fluid col">
+    <table class="table">
+        <tr>
+            <td>ID</td>
+            <td>Title</td>
+            <td>Content</td>
+            <td>Author</td>
+            <td>Date</td>
+            <td>Flag Post</td>
+            <td>Delete Post</td>
+        </tr>
+        <tr>
+            {% for post in report_table %}
+            <td>{{post.ID}}</td>
+            <td>{{post.title}}</td>
+            <td>{{post.content}}</td>
+            <td>{{post.by_user}}</td>
+            <td>{{post.created_at}}</td>
+            <td></td>
+            <td><button type="button" onClick="{{url_for}}">Delete</td></tr>
+            {% endfor %}
+        </tr>
+        </table>
+    </div>
