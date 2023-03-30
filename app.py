@@ -108,7 +108,7 @@ def post_submit():
     list=query_db('SELECT * FROM users WHERE username = ?', [session['username']], True)
 
     if list['whitelisted'] == "yes":
-        insert_db('INSERT INTO posts (title, content, by_user) VALUES (?, ?, ?, ?)', (title, post_content, user,))
+        insert_db('INSERT INTO posts (title, content, by_user) VALUES (?, ?, ?)', (title, post_content, user))
         return redirect(url_for('posts'))
 
     if list['blacklisted'] == "yes":
@@ -183,6 +183,24 @@ def admin_posts():
 def edit_user():
     user_entry=query_db('SELECT FROM users WHERE username = user.username')
     return redirect(url_for('user_database.html'), user_entry = user_entry)
+
+@app.route('/user/<username>')
+def user_profile(username):
+    conn = sqlite3.connect(DATABASE)
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM users WHERE username = ?', (username,))
+    user_row = cursor.fetchone()
+    conn.close()
+
+    user = {
+        'id': user_row[0],
+        'username': user_row[1],
+        'email': user_row[3]
+    } if user_row else None
+
+    user_posts=query_db('SELECT * FROM posts WHERE by_user = ? ORDER BY created_at DESC', (username,))
+
+    return render_template('user_profile.html', user=user, user_posts=user_posts)
 
 def insert_db(query, args):
     db = g._database = sqlite3.connect(DATABASE)
