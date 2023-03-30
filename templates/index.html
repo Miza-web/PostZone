@@ -71,7 +71,9 @@ toastr.success('Success', 'Post Created');
     </div>
     {% endif %}
     <p align="right">{{  post.created_at  }}</p>
-    <h4>{{ post.by_user }}</h4>
+    <a href="{{ url_for('user_profile', username=post.by_user) }}">
+      {{ post.by_user }}
+    </a>
     <h5>{{ post.title }}</h5>
     {{ post.content }}<br/>
     <button class="report_button" type="button">Report</button>
