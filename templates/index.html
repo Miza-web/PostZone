@@ -71,7 +71,7 @@ toastr.success('Success', 'Post Created');
     </div>
     {% endif %}
     <p align="right">{{  post.created_at  }}</p>
-    <a href="{{ url_for('user_profile', username=post.by_user) }}">
+    <a class="post_username" href="{{ url_for('user_profile', username=post.by_user) }}">
       {{ post.by_user }}
     </a>
     <h5>{{ post.title }}</h5>

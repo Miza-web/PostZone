@@ -81,3 +81,8 @@ body {
   text-align: center;
   margin-top: 10px;
 }
+.post_username {
+  text-align: center;
+  color: black;
+  font-size: 24px;
+}

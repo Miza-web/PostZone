@@ -63,7 +63,7 @@ def register():
     email = form.get('email')
     hashed_password = generate_password_hash(password)
 
-    insert_db('INSERT INTO users (username, password, email) VALUES (?, ?, ?)', (username, hashed_password, email))
+    insert_db('INSERT INTO users (username, password, email, user_type) VALUES (?, ?, ?, "user")', (username, hashed_password, email))
 
     return render_template('welcome.html', message='User Registered', type='success')
 
