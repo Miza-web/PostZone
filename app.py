@@ -52,7 +52,11 @@ def posts():
     return redirect(url_for('home'))
    posts=query_db('SELECT * FROM posts ORDER BY created_at DESC')
    user=query_db('SELECT * FROM users WHERE username = ?', [session['username']], True)
-   return render_template('index.html', posts = posts, user = user)
+   conn = sqlite3.connect(DATABASE)
+   cursor = conn.cursor()
+   cursor.execute("SELECT COUNT(*) FROM posts WHERE by_user = ?", [session['username']])
+   post_count = cursor.fetchone()[0]
+   return render_template('index.html', posts = posts, user = user, post_count = post_count)
 
 
 @app.route("/register", methods=['post'])

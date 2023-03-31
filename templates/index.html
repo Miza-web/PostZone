@@ -12,7 +12,7 @@ toastr.success('Success', 'Post Created');
   <div class="col-4 shadow p-3 mb-5 rounded">
       <b>Display name:</b> {{ user.username }}<br>
       <b>User e-mail:</b> {{ user.email }}<br>
-      <b>Total posts:</b><br>
+      <b>Total posts:</b> {{ post_count }} <br>
       {% if user.whitelisted == "yes" %}
       <b>Your account is whitelisted!</b>
       {% endif %}
