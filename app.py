@@ -216,6 +216,13 @@ def post_report():
     insert_db('UPDATE posts SET reported = ? WHERE ID = ?', (1, post_ID))
     return redirect(url_for('posts'))
 
+@app.route('/search')
+def search_posts():
+    query = request.args.get('query')
+    posts = ('%' + query + '%')
+    post_search = query_db('SELECT * FROM posts WHERE content LIKE ?', (posts,))
+    return render_template('post_search.html', post_search=post_search)
+
 
 def insert_db(query, args):
     db = g._database = sqlite3.connect(DATABASE)

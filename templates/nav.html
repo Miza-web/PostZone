@@ -21,6 +21,10 @@
         </li>
       </ul>
     </div>
+    <form method="get" action="{{ url_for('search_posts') }}">
+      <input type="text" name="query" placeholder="Search Posts">
+      <button type="submit">Search</button>
+    </form>
     <div class="welcome-session">
       <p>Welcome, {{session.username}}</p>
       <ul class="navbar-nav">
