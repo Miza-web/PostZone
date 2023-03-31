@@ -161,35 +161,42 @@ def account_update():
 
 @app.route("/admin")
 def admin():
-    if not session.get('username'):
+    user=query_db('SELECT * FROM users WHERE username = ?', [session['username']], True)
+    if not user['user_type'] == "admin":
         return redirect(url_for('home'))
-    return render_template("admin.html")
+    return render_template("admin.html", user = user)
 
 @app.route ("/admin/reports")
 def admin_reports():
-    if not session.get('username'):
+    user=query_db('SELECT * FROM users WHERE username = ?', [session['username']], True)
+    if not user['user_type'] == "admin":
         return redirect(url_for('home'))
     report_table=query_db('SELECT * FROM posts WHERE reported = 1 ORDER BY created_at DESC')
-    return render_template("report_database.html", report_table=report_table)
+    return render_template("report_database.html", report_table=report_table, user = user)
 
 @app.route("/admin/user")
 def admin_user():
-    if not session.get('username'):
+    user=query_db('SELECT * FROM users WHERE username = ?', [session['username']], True)
+    if not user['user_type'] == "admin":
         return redirect(url_for('home'))
     user_table=query_db('SELECT * FROM users')
-    return render_template("user_database.html", user_table = user_table)
+    return render_template("user_database.html", user_table = user_table, user = user)
 
 @app.route("/admin/posts")
 def admin_posts():
-    if not session.get('username'):
+    user=query_db('SELECT * FROM users WHERE username = ?', [session['username']], True)
+    if not user['user_type'] == "admin":
         return redirect(url_for('home'))
     post_table=query_db('SELECT * FROM posts ORDER BY created_at DESC')
-    return render_template("post_database.html", post_table = post_table)
+    return render_template("post_database.html", post_table = post_table, user = user)
 
 @app.route("/admin/edit_user")
 def edit_user():
+    user=query_db('SELECT * FROM users WHERE username = ?', [session['username']], True)
+    if not user['user_type'] == "admin":
+        return redirect(url_for('home'))
     user_entry=query_db('SELECT FROM users WHERE username = user.username')
-    return redirect(url_for('user_database.html'), user_entry = user_entry)
+    return redirect(url_for('user_database.html'), user_entry = user_entry, user = user)
 
 @app.route('/user/<username>')
 def user_profile(username):
