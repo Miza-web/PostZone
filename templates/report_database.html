@@ -11,6 +11,7 @@
             <td>Author</td>
             <td>Date</td>
             <td>Flag Post</td>
+            <td>Discard Report</td>
             <td>Delete Post</td>
         </tr>
         <tr>
@@ -20,6 +21,7 @@
             <td>{{post.content}}</td>
             <td>{{post.by_user}}</td>
             <td>{{post.created_at}}</td>
+            <td></td>
             <td></td>
             <td><button type="button" onClick="{{url_for}}">Delete</td></tr>
             {% endfor %}
