@@ -232,7 +232,8 @@ def search_posts():
     query = request.args.get('query')
     posts = ('%' + query + '%')
     post_search = query_db('SELECT * FROM posts WHERE content LIKE ?', (posts,))
-    return render_template('post_search.html', post_search=post_search)
+    user=query_db('SELECT * FROM users WHERE username = ?', [session['username']], True)
+    return render_template('post_search.html', post_search=post_search, user = user)
 
 
 def insert_db(query, args):
