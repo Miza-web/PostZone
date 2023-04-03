@@ -75,12 +75,6 @@ def register():
 
     return render_template('welcome.html', message='User Registered', type='success')
 
-@app.route("/news")
-def news():
-    if not session.get('username'):
-        return redirect(url_for('home'))
-    return render_template('news.html')
-
 @app.route("/account_settings")
 def account_settings():
     if not session.get('username'):
