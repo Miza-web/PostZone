@@ -2,13 +2,23 @@
 {% include "nav.html" %}
 {% block content %}{% endblock %}
 
+<div class="row h-500 acc_snippet">
+  <div class="col-4 shadow p-3 mb-5 rounded">
+      <b>Display name:</b> {{ user.username }}<br>
+      <b>User e-mail:</b> {{ user.email }}<br>
+      <b>Total posts:</b> {{ post_count }} <br>
+      {% if user.whitelisted == "yes" %}
+      <b>Your account is whitelisted!</b>
+      {% endif %}
+      {% if user.blacklisted == "yes" %}
+      <b>Your account is blacklisted!</b>
+      {% endif %}
+      {% if user.user_type == "admin" %}
+      <b>You have admin privileges.</b>
+      {% endif %}
+  </div>
+</div>
 <div class="container-fluid">
-    <div class="row h-500">
-        <div class="col-4 shadow p-3 mb-5 rounded">
-            <b>Display name:</b> {{ user.username }}<br>
-            <b>User e-mail:</b> {{ user.email }}
-        </div>
-    </div>
     {% for user_post in user_posts %}
     <div class="shadow mx-auto posts p-3 mb-5 rounded">
         {% if user_post.blacklisted == "yes" %}

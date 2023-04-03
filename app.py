@@ -43,8 +43,12 @@ def profile():
     user=query_db('SELECT * FROM users WHERE username = ?', [session['username']], True)
 
     user_posts=query_db('SELECT * FROM posts WHERE by_user = ? ORDER BY created_at DESC', [session['username']])
+    conn = sqlite3.connect(DATABASE)
+    cursor = conn.cursor()
+    cursor.execute("SELECT COUNT(*) FROM posts WHERE by_user = ?", [session['username']])
+    post_count = cursor.fetchone()[0]
 
-    return render_template('profile.html', user = user, user_posts = user_posts)
+    return render_template('profile.html', user = user, user_posts = user_posts, post_count = post_count)
 
 @app.route("/index")
 def posts():
