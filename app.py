@@ -149,19 +149,42 @@ def post_submit():
         insert_db('INSERT INTO posts (title, content, by_user) VALUES (?, ?, ?)', (title, post_content, user))
         return redirect(url_for('posts'))
 
-@app.route("/account_update", methods=['post'])
-def account_update():
+@app.route("/password_update", methods=['post'])
+def password_update():
     form = request.form
-    username = form.get('user')
-    user = session['username']
-    password = form.get('pass')
-    email = form.get('email')
-    hashed_password = generate_password_hash(password)
+    username = session['username']
+    old_pass = form.get('old_pass')
+    new_pass = form.get('new_pass')
+    c_new_pass = form.get('c_new_pass')
+    hashed_password = generate_password_hash(new_pass)
+    user=query_db('SELECT * FROM users WHERE username = ?', [username], True)
 
-    insert_db('UPDATE users SET username = ?, password  = ?, email = ? WHERE username = ?', (username, hashed_password, email, user))
+    if check_password_hash(user['password'], old_pass):
+        if c_new_pass == new_pass: 
+            insert_db('UPDATE users SET password = ? WHERE username = ?', (hashed_password, username))
+            session.pop('username')
+            session.pop('logged_in')
+            return render_template('welcome.html', message="Credentials updated.", type='update_success')
+        else:
+            return render_template('account_settings.html', message='Passwords dont match!', type='newpass_error', user = user)
+    else:
+        return render_template('account_settings.html', message="Current password doesn't match!", type='oldpass_error', user = user)
 
-    session.pop('username')
-    return redirect(url_for('home')) 
+@app.route("/email_update", methods=['post'])
+def email_update():
+    form = request.form
+    username = session['username']
+    new_email = form.get('new_email')
+    c_new_email = form.get('c_new_email')
+    user=query_db('SELECT * FROM users WHERE username = ?', [username], True)
+
+    if new_email == c_new_email:
+        insert_db('UPDATE users SET email = ? WHERE username = ?', (new_email, username))
+        session.pop('username')
+        session.pop('logged_in')
+        return render_template('welcome.html', message="Credentials updated.", type='update_success')
+    else:
+        return render_template('account_settings.html', message="E-mails don't match!", type='email_error', user = user)
 
 @app.route("/admin")
 def admin():

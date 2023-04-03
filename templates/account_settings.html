@@ -3,18 +3,49 @@
 {% block content %}{% endblock %}
 
 <body>
+<div class="failmessage">
+    {% if message %}
+    {% if type == 'newpass_error' %}
+    <script>
+    toastr.error("Please try again.", "Passwords don't match!"); 
+    </script> 
+    {% endif %}
+    {% if type == 'oldpass_error' %}
+    <script>
+    toastr.error("Please try again.", "Current password doesn't match!"); 
+    </script> 
+    {% endif %}
+    {% if type == 'email_error' %}
+    <script>
+    toastr.error("Please try again.", "E-mails don't match!"); 
+    </script> 
+    {% endif %}
+    {% endif %}
+</div>
+<center><h1>Hello, {{session.username}}</h1></center>
+<center><h2>Account Management</h2></center>
 <div class="container-fluid">
     <div class="row text-center">
         <div class="col">
-        <h1>Hello, {{session.username}}</h1>
-        <h3>Update your credentials</h3>
-        <form action="{{ url_for('account_update') }}" method="POST" id="acc_form">
-            <a>Password: </a><br>
-            <input type="password" placeholder="********" name="pass" style="width: 300px" required/><br>
-            <a>Confirm Password: </a><br>
-            <input type="password" placeholder="********" name="pass" style="width: 300px" required/><br>
-            <a>E-mail: </a><br>
-            <input type="text" placeholder="{{user.email}}" name="email" style="width: 300px" required/><br>
+        <h2>Update your password</h2>
+        <form action="{{ url_for('password_update') }}" method="POST" id="acc_form">
+            <a>Current Password: </a><br>
+            <input type="password" placeholder="********" name="old_pass" style="width: 300px" required/><br>
+            <a>New Password: </a><br>
+            <input type="password" placeholder="********" name="new_pass" style="width: 300px" required/><br>
+            <a>Confirm New Password: </a><br>
+            <input type="password" placeholder="********" name="c_new_pass" style="width: 300px" required/><br>
+            <input type="submit" value="Apply Changes" />
+        </form>
+        </div>
+        <div class="col">
+        <h2>Update your e-mail</h2>
+        <form action="{{ url_for('email_update') }}" method="POST" id="acc_form">
+            <a>Current e-mail: {{user.email}}</a><br>
+            <a>New e-mail</a><br>
+            <input type="text" placeholder="email@gmail.com" name="new_email" style="width: 300px" required/><br>
+            <a>Confirm New e-mail</a><br>
+            <input type="text" placeholder="email@gmail.com" name="c_new_email" style="width: 300px" required/><br>
             <input type="submit" value="Apply Changes" />
         </form>
         </div>

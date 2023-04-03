@@ -14,6 +14,11 @@
   toastr.success('You can now log in', 'Registration successful'); 
   </script> 
   {% endif %}
+  {% if type == 'update_success' %}
+  <script>
+  toastr.success("Please log-in again.", "Credentials updated!"); 
+  </script> 
+  {% endif %}
   {% endif %}
   </div>
   <div class="logo">
