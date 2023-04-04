@@ -37,6 +37,7 @@ toastr.success('Success', 'Post Created');
 </div>
 </div>
 </div> 
+<div id="posts">
     {% for post in posts %}
     <div class="shadow mx-auto posts p-3 mb-5 rounded">
     {% if post.blacklisted == "yes" %}
@@ -85,4 +86,24 @@ toastr.success('Success', 'Post Created');
     {% endfor %}
 </div>
 </div>
+</div>
+<script type="text/javascript">
+  var postCount = 1;
+
+  window.addEventListener('scroll', function() {
+    if (window.innerHeight + window.pageYOffset >= document.body.offsetHeight) {
+      var xhr = new XMLHttpRequest();
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+          var newPosts = (xhr.responseText);
+          document.getElementById('posts').insertAdjacentHTML('beforeend', newPosts)
+          postCount++
+        }
+      };
+      xhr.open('GET', '/load_posts?page=' + postCount, true);
+      xhr.send();
+    }
+  });
+
+</script>
 </body>

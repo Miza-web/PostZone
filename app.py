@@ -1,5 +1,5 @@
 from sqlite3.dbapi2 import Cursor, connect
-from flask import Flask, config, render_template, request, g, session, url_for, redirect
+from flask import Flask, config, jsonify, render_template, request, g, session, url_for, redirect
 import sqlite3
 import re
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -54,13 +54,30 @@ def profile():
 def posts():
    if not session.get('username'):
     return redirect(url_for('home'))
-   posts=query_db('SELECT * FROM posts ORDER BY created_at DESC')
+   page = request.args.get('page', 0, int)
+   if page == 0:
+        offset = 0
+   else:
+        offset = 5 * page
+   posts=query_db('SELECT * FROM posts ORDER BY created_at DESC LIMIT 5 OFFSET ?', [offset])
    user=query_db('SELECT * FROM users WHERE username = ?', [session['username']], True)
    conn = sqlite3.connect(DATABASE)
    cursor = conn.cursor()
    cursor.execute("SELECT COUNT(*) FROM posts WHERE by_user = ?", [session['username']])
    post_count = cursor.fetchone()[0]
    return render_template('index.html', posts = posts, user = user, post_count = post_count)
+
+@app.route("/load_posts")
+def load_posts():
+   page = request.args.get('page', 0, int)
+   if page == 0:
+        offset = 0
+   else:
+        offset = 5 * page
+   posts=query_db('SELECT * FROM posts ORDER BY created_at DESC LIMIT 5 OFFSET ?', [offset])
+   html = render_template('posts.html', posts = posts)
+   return html
+
 
 
 @app.route("/register", methods=['post'])
