@@ -91,7 +91,7 @@ toastr.success('Success', 'Post Created');
   var postCount = 1;
 
   window.addEventListener('scroll', function() {
-    if (window.innerHeight + window.pageYOffset + 10 >= document.body.offsetHeight) {
+    if (window.innerHeight + window.pageYOffset + 1 >= document.body.offsetHeight) {
       var xhr = new XMLHttpRequest();
       xhr.onreadystatechange = function() {
         if (xhr.readyState === 4 && xhr.status === 200) {
