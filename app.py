@@ -88,7 +88,7 @@ def register():
     email = form.get('email')
     hashed_password = generate_password_hash(password)
 
-    insert_db('INSERT INTO users (username, password, email, user_type) VALUES (?, ?, ?, "user")', (username, hashed_password, email))
+    insert_db('INSERT INTO users (username, password, email, user_type, blacklisted, whitelisted) VALUES (?, ?, ?, "user", "no", "no")', (username, hashed_password, email))
 
     return render_template('welcome.html', message='User Registered', type='success')
 
@@ -232,13 +232,21 @@ def admin_posts():
     post_table=query_db('SELECT * FROM posts ORDER BY created_at DESC')
     return render_template("post_database.html", post_table = post_table, user = user)
 
-@app.route("/admin/edit_user")
-def edit_user():
+@app.route("/admin/edit_user/<int:user_id>", methods=['GET', 'POST'])
+def edit_user(user_id):
     user=query_db('SELECT * FROM users WHERE username = ?', [session['username']], True)
     if not user['user_type'] == "admin":
         return redirect(url_for('home'))
-    user_entry=query_db('SELECT FROM users WHERE username = user.username')
-    return redirect(url_for('user_database.html'), user_entry = user_entry, user = user)
+    form = request.form
+    user_id = request.form.get('user_id')
+    username = request.form['username']
+    email = request.form['email']
+    user_type = request.form['user_type']
+    blacklisted = request.form['blacklisted']
+    whitelisted = request.form['whitelisted']
+    insert_db('UPDATE users SET username=?, email=?, user_type=?, blacklisted=?, whitelisted=? WHERE ID=?', (username, email, user_type, blacklisted, whitelisted, user_id))
+
+    return render_template('admin.html', user = user)
 
 @app.route('/user/<username>')
 def user_profile(username):
