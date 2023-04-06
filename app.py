@@ -246,7 +246,30 @@ def edit_user(user_id):
     whitelisted = request.form['whitelisted']
     insert_db('UPDATE users SET username=?, email=?, user_type=?, blacklisted=?, whitelisted=? WHERE ID=?', (username, email, user_type, blacklisted, whitelisted, user_id))
 
-    return render_template('admin.html', user = user)
+    user_table=query_db('SELECT * FROM users')
+    return render_template('user_database.html', user = user, user_table = user_table, message='User entry edited', type='edited')
+
+@app.route("/delete_user", methods=['POST'])
+def delete_user():
+    user=query_db('SELECT * FROM users WHERE username = ?', [session['username']], True)
+    if not user['user_type'] == "admin":
+        return redirect(url_for('home'))
+    user_id = request.form['user_id']
+    insert_db('DELETE FROM users WHERE ID = ?', (user_id,))
+
+    user_table=query_db('SELECT * FROM users')
+    return render_template('user_database.html', user = user, user_table = user_table, message='User deleted', type='deleted')
+
+@app.route("/delete_post", methods=['POST'])
+def delete_post():
+    user=query_db('SELECT * FROM users WHERE username = ?', [session['username']], True)
+    if not user['user_type'] == "admin":
+        return redirect(url_for('home'))
+    post_id = request.form['post_id']
+    insert_db('DELETE FROM posts WHERE ID = ?', (post_id,))
+
+    post_table=query_db('SELECT * FROM posts ORDER BY created_at DESC')
+    return render_template("post_database.html", post_table = post_table, user = user, message='Post deleted', type='deleted')
 
 @app.route('/user/<username>')
 def user_profile(username):

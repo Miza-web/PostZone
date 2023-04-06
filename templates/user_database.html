@@ -1,5 +1,15 @@
 {% include "admin.html" %}
 {% block content %}{% endblock %}
+{% if type == 'edited' %}
+<script>
+toastr.success('User entry edited.', 'Success!'); 
+</script> 
+{% endif %}
+{% if type == 'deleted' %}
+<script>
+toastr.success('User deleted.', 'Success!'); 
+</script> 
+{% endif %}
 
 <div class="container-fluid col">
     <table class="table">
@@ -22,7 +32,10 @@
             <td>{{user.whitelisted}}</td>
             <td>{{user.user_type}}</td>
             <td><button type="button" class="" data-toggle="modal" data-target="#editModal{{user.id}}">Edit</button></td>
-            <td><button type="button" onClick="{{url_for}}">Delete</td></tr>
+            <td><form action="{{ url_for('delete_user') }}" method="POST">
+            <input type="hidden" name="user_id" value="{{ user.id }}">
+            <button type="submit">Delete</button>
+            </form></tr>
 
   <!-- Edit User Modal -->
   <div class="modal fade" id="editModal{{user.id}}" tabindex="-1" role="dialog" aria-labelledby="editModal{{user.id}}Label" aria-hidden="true">
