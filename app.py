@@ -59,13 +59,14 @@ def posts():
         offset = 0
    else:
         offset = 5 * page
+   reported = request.args.get('reported', 0, int)
    posts=query_db('SELECT * FROM posts ORDER BY created_at DESC LIMIT 5 OFFSET ?', [offset])
    user=query_db('SELECT * FROM users WHERE username = ?', [session['username']], True)
    conn = sqlite3.connect(DATABASE)
    cursor = conn.cursor()
    cursor.execute("SELECT COUNT(*) FROM posts WHERE by_user = ?", [session['username']])
    post_count = cursor.fetchone()[0]
-   return render_template('index.html', posts = posts, user = user, post_count = post_count)
+   return render_template('index.html', posts = posts, user = user, post_count = post_count, reported = reported)
 
 @app.route("/load_posts")
 def load_posts():
@@ -295,7 +296,7 @@ def post_report(post_ID):
     report_message = request.form['report_message']
 
     insert_db('UPDATE posts SET reported = ?, report_message = ? WHERE ID = ?', (1, report_message, post_ID))
-    return redirect(url_for('posts'))
+    return redirect(url_for('posts') + '?reported=1')
 
 @app.route('/discard_report', methods=['POST'])
 def discard_report():
