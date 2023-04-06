@@ -289,12 +289,19 @@ def user_profile(username):
 
     return render_template('user_profile.html', user=user, user_posts=user_posts)
 
-@app.route('/report', methods=['POST'])
-def post_report():
+@app.route('/post_report/<int:post_ID>', methods=['POST'])
+def post_report(post_ID):
     post_ID = request.form['post_ID']
+    report_message = request.form['report_message']
 
-    insert_db('UPDATE posts SET reported = ? WHERE ID = ?', (1, post_ID))
+    insert_db('UPDATE posts SET reported = ?, report_message = ? WHERE ID = ?', (1, report_message, post_ID))
     return redirect(url_for('posts'))
+
+@app.route('/discard_report', methods=['POST'])
+def discard_report():
+    post_ID = request.form['post_ID']
+    insert_db('UPDATE posts SET reported=?, report_message=? WHERE ID = ?', (0, "", post_ID))   
+    return redirect(url_for('admin_reports'))
 
 @app.route('/search')
 def search_posts():

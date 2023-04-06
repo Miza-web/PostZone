@@ -37,10 +37,29 @@
 </a>
 <h5>{{ post.title }}</h5>
 {{ post.content }}<br/>
-<form method="post" action="{{ url_for('post_report') }}">
-  <input type="hidden" name="post_ID" value="{{ post.ID }}">
-  <button class="report_button" type="submit">Report</button>
-</form>
+<button type="button" class="report_button" data-toggle="modal" data-target="#reportModal{{ post.ID }}">Report</button>
 </div>
 <br/>
+<div class="modal fade" id="reportModal{{ post.ID }}" tabindex="-1" role="dialog" aria-labelledby="reportModalLabel{{ post.ID }}">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="reportModalLabel{{ post.ID }}">Report Post</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form method="post" action="{{ url_for('post_report', post_ID=post.ID) }}">
+          <input type="hidden" name="post_ID" value="{{ post.ID }}">
+          <div class="form-group">
+            <label for="report_message">Report Message:</label>
+            <textarea class="form-control" id="report_message" name="report_message"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 {% endfor %}
