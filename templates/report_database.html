@@ -10,9 +10,9 @@
             <td>Content</td>
             <td>Author</td>
             <td>Date</td>
+            <td>Report Message</td>
             <td>Flag Post</td>
             <td>Discard Report</td>
-            <td>Delete Post</td>
         </tr>
         <tr>
             {% for post in report_table %}
@@ -21,10 +21,48 @@
             <td>{{post.content}}</td>
             <td>{{post.by_user}}</td>
             <td>{{post.created_at}}</td>
-            <td></td>
-            <td></td>
-            <td><button type="button" onClick="{{url_for}}">Delete</td></tr>
+            <td>{{post.report_message}}</td>
+            <td><button type="button" class="" data-toggle="modal" data-target="#editModal{{post.ID}}">Flag</button></td>
+            <td><form action="{{ url_for('discard_report') }}" method="POST">
+                <input type="hidden" name="post_ID" value="{{ post.ID }}">
+                <button type="submit">Discard</button>
+                </form></tr>
+  <!-- Flag Post Modal -->
+  <div class="modal fade" id="editModal{{post.ID}}" tabindex="-1" role="dialog" aria-labelledby="editModal{{post.ID}}Label" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editModal{{ post.ID }}Label">Flag Post</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form method="POST" action="{{ url_for('edit_user', user_id=user.id) }}">
+          <input type="hidden" name="user_id" value="{{ user.ID }}">
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="flag_covid">Coronavirus Flag</label><br>
+              <select id="flag_covid" name="flag_covid">
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+              </select>
+            </div>
+            <div class="form-group">
+                <label for="flag_vaccine">Vaccine Flag</label><br>
+                <select id="flag_vaccine" name="flag_vaccine">
+                  <option value="yes">Yes</option>
+                  <option value="no">No</option>
+                </select>
+              </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
             {% endfor %}
-        </tr>
         </table>
     </div>

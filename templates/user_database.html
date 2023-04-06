@@ -59,16 +59,25 @@ toastr.success('User deleted.', 'Success!');
               <input type="email" class="form-control" id="email" name="email" value="{{ user.email }}">
             </div>
             <div class="form-group">
-              <label for="user_type">User Type</label>
-              <input type="text" class="form-control" id="user_type" name="user_type" value="{{ user.user_type }}">
+              <label for="user_type">User Type</label><br>
+              <select id="user_type" name="user_type">
+                <option value="user" {% if user.user_type == "user" %} selected {% endif %}>User</option>
+                <option value="admin" {% if user.user_type == "admin" %} selected {% endif %}>Admin</option>
+              </select>
             </div>
             <div class="form-group">
-              <label for="whitelist">Whitelisted</label>
-              <input type="text" class="form-control" id="whitelisted" name="whitelisted" value="{{ user.whitelisted }}">
+              <label for="whitelist">Whitelisted</label><br>
+              <select id="whitelisted" name="whitelisted">
+                <option value="no" {% if user.whitelisted == "no" %} selected {% endif %}>No</option>
+                <option value="yes" {% if user.whitelisted == "yes" %} selected {% endif %}>Yes</option>
+              </select>
             </div>
             <div class="form-group">
-              <label for="blacklist">Blacklisted</label>
-              <input type="text" class="form-control" id="blacklisted" name="blacklisted" value="{{ user.blacklisted }}">
+              <label for="blacklist">Blacklisted</label><br>
+              <select id="blacklisted" name="blacklisted">
+                <option value="no" {% if user.blacklisted == "no" %} selected {% endif %}>No</option>
+                <option value="yes" {% if user.blacklisted == "yes" %} selected {% endif %}>Yes</option>
+              </select>
             </div>
           </div>
           <div class="modal-footer">
