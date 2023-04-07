@@ -112,9 +112,9 @@ def contact():
         msg = Message(subject=subject, sender=email, recipients=['your-email@gmail.com'])
         msg.body = f"From: {name} ({email})\n\n{message}"
         mail.send(msg)
-        return render_template('contact.html')
+        return redirect(url_for('posts'))
 
-    return render_template('contact.html')
+    return redirect(url_for('posts'))
 
 
 @app.route("/account_settings")
