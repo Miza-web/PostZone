@@ -13,6 +13,10 @@
         <li class="nav-item">
           <a class="nav-link" href="{{ url_for('profile') }}">Profile</a>
         </li>
+        <!-- Navbar link to open contact form modal -->
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('contact') }}" data-toggle="modal" data-target="#contactModal">Contact</a>
+        </li>
         {% if user.user_type == "admin" %}
         <li class="nav-item">
           <a class="nav-link" href="{{ url_for('admin') }}">Admin Panel</a>
@@ -36,3 +40,46 @@
       </ul>
     </div>
   </nav>
+  <!-- Contact form modal -->
+  <div class="modal fade" id="contactModal" tabindex="-1" role="dialog" aria-labelledby="contactModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="contactModalLabel">Contact Us</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert alert-{{ message[1] }} alert-dismissible fade show" role="alert">
+          {{ message[0] }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      {% endfor %}
+    {% endif %}
+    <form method="post" action="{{ url_for('contact') }}">
+    <div class="mb-3">
+      <label for="name" class="form-label">Name</label>
+      <input type="text" class="form-control" id="name" name="name" required>
+    </div>
+    <div class="mb-3">
+      <label for="email" class="form-label">Email address</label>
+      <input type="email" class="form-control" id="email" name="email" required>
+    </div>
+    <div class="mb-3">
+      <label for="subject" class="form-label">Subject</label>
+      <input type="text" class="form-control" id="subject" name="subject" required>
+    </div>
+    <div class="mb-3">
+      <label for="message" class="form-label">Message</label>
+      <textarea class="form-control" id="message" name="message" rows="5" required></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
+</div>
+</div>
+</div>
+

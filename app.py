@@ -1,12 +1,20 @@
 from sqlite3.dbapi2 import Cursor, connect
 from flask import Flask, config, jsonify, render_template, request, g, session, url_for, redirect
+from flask_mail import Mail, Message
 import sqlite3
 import re
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import redirect
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'GvFVhSsCBsGu4ZPRhvDxzqZzDyiMT3oz'
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USE_SSL'] = True
+app.config['MAIL_USERNAME'] = 'your-email@gmail.com'
+app.config['MAIL_PASSWORD'] = 'your-email-password'
+app.config['MAIL_DEFAULT_SENDER'] = 'your-email@gmail.com'
 
+mail = Mail(app)
 DATABASE='database.db'
 
 
@@ -92,6 +100,22 @@ def register():
     insert_db('INSERT INTO users (username, password, email, user_type, blacklisted, whitelisted) VALUES (?, ?, ?, "user", "no", "no")', (username, hashed_password, email))
 
     return render_template('welcome.html', message='User Registered', type='success')
+
+@app.route('/contact', methods=['GET', 'POST'])
+def contact():
+    if request.method == 'POST':
+        name = request.form['name']
+        email = request.form['email']
+        subject = request.form['subject']
+        message = request.form['message']
+
+        msg = Message(subject=subject, sender=email, recipients=['your-email@gmail.com'])
+        msg.body = f"From: {name} ({email})\n\n{message}"
+        mail.send(msg)
+        return render_template('contact.html')
+
+    return render_template('contact.html')
+
 
 @app.route("/account_settings")
 def account_settings():
@@ -249,6 +273,22 @@ def edit_user(user_id):
 
     user_table=query_db('SELECT * FROM users')
     return render_template('user_database.html', user = user, user_table = user_table, message='User entry edited', type='edited')
+
+@app.route("/report_review/<int:post_id>", methods=['GET', 'POST'])
+def report_review(post_id):
+    user=query_db('SELECT * FROM users WHERE username = ?', [session['username']], True)
+    if not user['user_type'] == "admin":
+        return redirect(url_for('home'))
+    form = request.form
+    post_id = request.form.get('post_id')
+    flag_covid = request.form['flag_covid']
+    flag_vaccine = request.form['flag_vaccine']
+    flag_tests = request.form['flag_tests']
+    flag_cures = request.form['flag_cures']
+    insert_db('UPDATE posts SET flag_covid=?, flag_vaccine=?, flag_tests=?, flag_cures=?, reported=?, report_message=? WHERE ID=?', (flag_covid, flag_vaccine, flag_tests, flag_cures, "0", "", post_id))
+
+    report_table=query_db('SELECT * FROM posts WHERE reported = 1 ORDER BY created_at DESC')
+    return render_template("report_database.html", report_table=report_table, user = user, message='Report reviewed', type='reviewed')
 
 @app.route("/delete_user", methods=['POST'])
 def delete_user():
