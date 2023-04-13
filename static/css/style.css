@@ -22,9 +22,9 @@ body {
     background-size: cover;
   }
 .btn-welcome {
-    background-color: blanchedalmond;
-    color: black;
-    font-size: 25px;
+    background-color: #ff8300;
+    color: rgb(255, 255, 255);
+    font-size: 30px;
     text-align: center;
     width: 300px;
 }
@@ -85,4 +85,7 @@ body {
   text-align: center;
   color: black;
   font-size: 24px;
+}
+.login_links {
+  margin-top: 200px;
 }
