@@ -47,6 +47,8 @@ body {
 }
 .acc_snippet {
   width: 50%;
+  height: 50%;
+  text-align: left;
 }
 .footer-custom {
   border-top: 2px solid orange;

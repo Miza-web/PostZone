@@ -14,7 +14,11 @@ toastr.success('Thank you!', 'We have received your report.');
 </script> 
 {% endif %}
 <div class="row h-500 acc_snippet">
-  <div class="col-4 shadow p-3 mb-5 rounded">
+
+</div>
+<div class="container-fluid create-post">
+  <div class="row h-500">   
+    <div class="col-2 shadow p-3 mb-5 rounded acc_snippet">
       <b>Display name:</b> {{ user.username }}<br>
       <b>User e-mail:</b> {{ user.email }}<br>
       <b>Total posts:</b> {{ post_count }} <br>
@@ -28,10 +32,7 @@ toastr.success('Thank you!', 'We have received your report.');
       <b>You have admin privileges.</b>
       {% endif %}
   </div>
-</div>
-<div class="container-fluid create-post">
-  <div class="row h-500">
-    <div class="col">
+    <div class="col-8 text-center">
       <h2>{{session.username}}</h2>
       <form action="{{ url_for('post_submit') }}" method="POST" id="post_form">
         <input type="text" placeholder="Title" name="title" style="width: 500px" required/><br>
