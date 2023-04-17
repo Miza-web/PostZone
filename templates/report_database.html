@@ -27,7 +27,7 @@ toastr.success('Report reviewed & post updated.', 'Success!');
             <td>{{post.by_user}}</td>
             <td>{{post.created_at}}</td>
             <td>{{post.report_message}}</td>
-            <td><button type="button" class="" data-toggle="modal" data-target="#editModal{{post.ID}}">Flag</button></td>
+            <td><button type="button" data-toggle="modal" data-target="#editModal{{post.ID}}">Flag</button></td>
             <td><form action="{{ url_for('discard_report') }}" method="POST">
                 <input type="hidden" name="post_ID" value="{{ post.ID }}">
                 <button type="submit">Discard</button>
@@ -38,7 +38,7 @@ toastr.success('Report reviewed & post updated.', 'Success!');
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="editModal{{ post.ID }}Label">Flag Post</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <button class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
@@ -75,7 +75,6 @@ toastr.success('Report reviewed & post updated.', 'Success!');
               </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             <button type="submit" class="btn btn-primary">Save Changes</button>
           </div>
         </form>

@@ -31,7 +31,7 @@ toastr.success('User deleted.', 'Success!');
             <td>{{user.blacklisted}}</td>
             <td>{{user.whitelisted}}</td>
             <td>{{user.user_type}}</td>
-            <td><button type="button" class="" data-toggle="modal" data-target="#editModal{{user.id}}">Edit</button></td>
+            <td><button type="button" data-toggle="modal" data-target="#editModal{{user.id}}">Edit</button></td>
             <td><form action="{{ url_for('delete_user') }}" method="POST">
             <input type="hidden" name="user_id" value="{{ user.id }}">
             <button type="submit">Delete</button>
@@ -43,7 +43,7 @@ toastr.success('User deleted.', 'Success!');
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="editModal{{ user.id }}Label">Edit User</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <button class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
@@ -81,7 +81,6 @@ toastr.success('User deleted.', 'Success!');
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             <button type="submit" class="btn btn-primary">Save Changes</button>
           </div>
         </form>
