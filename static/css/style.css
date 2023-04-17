@@ -21,13 +21,6 @@ body {
     -o-background-size: cover;
     background-size: cover;
   }
-.btn-welcome {
-    background-color: #ff8300;
-    color: rgb(255, 255, 255);
-    font-size: 30px;
-    text-align: center;
-    width: 300px;
-}
 .failmessage {
   color: red;
 }
@@ -74,7 +67,7 @@ body {
   width: auto;
 }
 .report_button {
-  background-color: blanchedalmond;
+  background-color: #ff8300;
   border: 1px solid black;
   color: black;
   font-size: 15px;
@@ -91,16 +84,36 @@ body {
 }
 input[type=submit] {
   background-color: #ff8300;
-  border: none;
+  border: 1px solid #ff8300;
   width: auto;
   height: auto;
   padding: 8px 16px;
   border-radius: 8px;
   margin-top: 10px;
 }
+input[type=submit]:hover {
+  background-color: rgb(255, 255, 255);
+  border: 1px solid #ff8300;
+  width: auto;
+  height: auto;
+  padding: 8px 16px;
+  border-radius: 8px;
+  margin-top: 10px;
+  color: black;
+}
 button[type=submit] {
   background-color: #ff8300;
-  border: none;
+  border: 1px solid #ff8300;
+  width: auto;
+  height: auto;
+  padding: 8px 16px;
+  border-radius: 8px;
+  margin-top: 10px;
+  color: black;
+}
+button[type=submit]:hover {
+  background-color: rgb(255, 255, 255);
+  border: 1px solid #ff8300;
   width: auto;
   height: auto;
   padding: 8px 16px;
@@ -109,12 +122,68 @@ button[type=submit] {
   color: black;
 }
 button[type=button] {
-  background-color: #ff8300;
-  border: none;
+  border: 1px solid #ff8300;
   width: auto;
   height: auto;
   padding: 8px 16px;
   border-radius: 8px;
   margin-top: 10px;
   color: black;
+}
+button[type=button]:hover {
+  background-color: rgb(255, 255, 255);
+  border: 1px solid #ff8300;
+  width: auto;
+  height: auto;
+  padding: 8px 16px;
+  border-radius: 8px;
+  margin-top: 10px;
+  color: black;
+}
+input[type=text] {
+  border-radius: 4px;
+  border: 1px solid rgb(58, 58, 58);
+  padding: 8px 16px;
+}
+input[type=email] {
+  border-radius: 4px;
+  border: 1px solid rgb(58, 58, 58);
+  padding: 8px 16px;
+}
+input[type=password] {
+  border-radius: 4px;
+  border: 1px solid rgb(58, 58, 58);
+  padding: 8px 16px;
+}
+textarea {
+  border-radius: 4px;
+  border: 1px solid rgb(58, 58, 58);
+  padding: 4px 8px;
+}
+.btn-welcome {
+  background-color: #ff8300;
+  border: 1px solid #ff8300;
+  font-size: 30px;
+  text-align: center;
+  width: 300px;
+  border: none;
+  color: black;
+}
+.btn-welcome:hover {
+  background-color: #ffffff;
+  border: 1px solid #ff8300;
+  font-size: 30px;
+  text-align: center;
+  width: 300px;
+  border: none;
+  color: black;
+}
+.post_search {
+  margin-left: auto;
+  margin-right: auto;
+}
+.modal-msg {
+  border-radius: 4px;
+  border: 1px solid rgb(58, 58, 58);
+  padding: 4px 8px;
 }
