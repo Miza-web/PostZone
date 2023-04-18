@@ -34,7 +34,7 @@
 <center><a class="post_username" href="{{ url_for('user_profile', username=post.by_user) }}">
   {{ post.by_user }}
 </a></center>
-<h5>{{ post.title }}</h5>
+<h5 class="post_title">{{ post.title }}</h5>
 {{ post.content }}<br/>
 <button type="button" class="report_button" data-toggle="modal" data-target="#reportModal{{ post.ID }}">Report</button>
 </div>
