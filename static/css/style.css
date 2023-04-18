@@ -29,6 +29,7 @@ body {
 }
 .posts {
   width: 45%;
+  border-radius: 12px;
 }
 .create-post {
   margin-left: auto;
@@ -191,7 +192,7 @@ textarea {
   background-color: rgb(240, 240, 240);
 }
 .post_display {
-  border: 1px solid black;
+  border: 1px solid rgba(0, 0, 0, 0.349);
 }
 .padding_posts {
 padding-top: 20px;

@@ -32,10 +32,9 @@ toastr.success('Thank you!', 'We have received your report.');
       <b>You have admin privileges.</b>
       {% endif %}
   </div>
-    <div class="col-8 text-center">
-      <h2>{{session.username}}</h2>
+    <div class="col-8 pt-3 text-center">
       <form action="{{ url_for('post_submit') }}" method="POST" id="post_form">
-        <input type="text" placeholder="Title" name="title" style="width: 40%" required/><br>
+        <input class="mb-2" type="text" placeholder="Title" name="title" style="width: 40%" required/><br>
         <textarea placeholder="Post content" form="post_form" name="content" style="height: 100px; width: 40%" required></textarea>
         <br/>
         <input type="submit" value="Submit Post" />
