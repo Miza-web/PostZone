@@ -20,7 +20,7 @@
 </div>
 <div class="container-fluid">
     {% for user_post in user_posts %}
-    <div class="shadow mx-auto posts p-3 mb-5 rounded">
+    <div class="mx-auto posts p-3 mb-5 rounded post_display">
         {% if user_post.blacklisted == "yes" %}
     <h5>The following account has committed repeated violations.</h5>
     {% endif %}
@@ -52,8 +52,7 @@
       <a href="https://www.cdc.gov/coronavirus/2019-ncov/index.html">CDC - Coronavirus</a>
     </div>
     {% endif %}
-    <p align="right">{{  user_post.created_at  }}</p>
-    <h4>{{ user_post.by_user }}</h4>
+    <h4 class="post_username">{{ user_post.by_user }}</h4>
     <h5>{{ user_post.title }}</h5>
     {{ user_post.content }}<br/>
     </div>

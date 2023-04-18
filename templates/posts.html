@@ -1,5 +1,5 @@
 {% for post in posts %}
-<div class="shadow mx-auto posts p-3 mb-5 rounded">
+<div class="mx-auto posts p-3 mb-5 rounded post_display">
 {% if post.blacklisted == "yes" %}
 <h5>The following account has committed repeated violations.</h5>
 {% endif %}
@@ -31,10 +31,9 @@
   <a href="https://www.cdc.gov/coronavirus/2019-ncov/index.html">CDC - Coronavirus</a>
 </div>
 {% endif %}
-<p align="right">{{  post.created_at  }}</p>
-<a class="post_username" href="{{ url_for('user_profile', username=post.by_user) }}">
+<center><a class="post_username" href="{{ url_for('user_profile', username=post.by_user) }}">
   {{ post.by_user }}
-</a>
+</a></center>
 <h5>{{ post.title }}</h5>
 {{ post.content }}<br/>
 <button type="button" class="report_button" data-toggle="modal" data-target="#reportModal{{ post.ID }}">Report</button>
