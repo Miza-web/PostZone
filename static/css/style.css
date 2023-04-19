@@ -63,9 +63,12 @@ body {
 }
 .flagged_post {
   text-align: center;
-  border: 2px solid #ff8300;
+  background-color: #ffcf9b;
+  border-radius: 8px;
   height: auto;
   width: auto;
+  font-weight: bold;
+  font-size: 14px;
 }
 .report_button {
   background-color: #ff8300;
@@ -76,9 +79,11 @@ body {
   margin-top: 10px;
 }
 .post_username {
-  text-align: center;
   color: black;
-  font-size: 28px;
+  font-size: 32px;
+  vertical-align: middle;
+  width: 45%;
+  border-radius: 12px;
 }
 .login_links {
   margin-top: 200px;
@@ -200,4 +205,21 @@ padding-top: 20px;
 .post_title {
   font-size: 22px;
   font-weight: bold;
+  text-align: center;
+}
+.acc_blacklist {
+  width: 80%;
+  font-weight: bold;
+  font-size: 14px;
+}
+.blacklist_msg {
+  background-color: rgb(250, 215, 215);
+  border-radius: 8px;
+  padding-bottom: 2px;
+  padding-top: 5px;
+}
+.resources {
+  padding: 8px;
+  color: darkblue;
+  font-size: 16px;
 }

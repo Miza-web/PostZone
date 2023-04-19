@@ -1,40 +1,46 @@
 {% for post in posts %}
+<div class="mx-auto post_username p-3">
+  <img src="../static/assets/default_icon.png" style="width:45px"><a class="post_username" href="{{ url_for('user_profile', username=post.by_user) }}">
+    {{ post.by_user }}
+  </a>
+</div>
 <div class="mx-auto posts p-3 mb-5 post_display">
 {% if post.blacklisted == "yes" %}
-<h5>The following account has committed repeated violations.</h5>
+<center>
+  <div class="blacklist_msg">
+  <img src="../static/assets/red-alert-icon.png" style="width:30px">
+  <h5 class="acc_blacklist">The following account has been found to be posting malicious posts repeatedly.</h5>
+  </div>
+</center>
 {% endif %}
 {% if post.flag_covid == "yes" %}
 <div class="flagged_post">
-  <h5>The following post might contain misleading information about the COVID-19 pandemic. Please refer to our resources for more information.</h5>
-  <a href="https://www.nhs.uk/conditions/coronavirus-covid-19/">NHS - Coronavirus </a><br>
-  <a href="https://www.cdc.gov/coronavirus/2019-ncov/index.html">CDC - Coronavirus</a>
+  <h5 class="flagged_post">The following post might contain misleading information about the COVID-19 pandemic. Please refer to our resources for more information.</h5>
+  <a class="resources" href="https://www.nhs.uk/conditions/coronavirus-covid-19/">NHS</a>
+  <a class="resources" href="https://www.cdc.gov/coronavirus/2019-ncov/index.html">CDC</a>
 </div>
 {% endif %}
 {% if post.flag_vaccine == "yes" %}
 <div class="flagged_post">
-  <h5>The following post might contain misleading information about the COVID-19 vaccines. Please refer to our resources for more information.</h5>
-  <a href="https://www.nhs.uk/conditions/coronavirus-covid-19/">NHS - Coronavirus </a><br>
-  <a href="https://www.cdc.gov/coronavirus/2019-ncov/index.html">CDC - Coronavirus</a>
+  <h5 class="flagged_post">The following post might contain misleading information about the COVID-19 vaccines. Please refer to our resources for more information.</h5>
+  <a class="resources" href="https://www.nhs.uk/conditions/coronavirus-covid-19/">NHS - Coronavirus </a><br>
+  <a class="resources" href="https://www.cdc.gov/coronavirus/2019-ncov/index.html">CDC - Coronavirus</a>
 </div>
 {% endif %}
 {% if post.flag_cures == "yes" %}
 <div class="flagged_post">
-  <h5>The following post might contain misleading information about the COVID-19 cures. Please refer to our resources for more information.</h5>
-  <a href="https://www.nhs.uk/conditions/coronavirus-covid-19/">NHS - Coronavirus </a><br>
-  <a href="https://www.cdc.gov/coronavirus/2019-ncov/index.html">CDC - Coronavirus</a>
+  <h5 class="flagged_post">The following post might contain misleading information about the COVID-19 cures. Please refer to our resources for more information.</h5>
+  <a class="resources" href="https://www.nhs.uk/conditions/coronavirus-covid-19/">NHS - Coronavirus </a><br>
+  <a class="resources" href="https://www.cdc.gov/coronavirus/2019-ncov/index.html">CDC - Coronavirus</a>
 </div>
 {% endif %}
 {% if post.flag_tests == "yes" %}
 <div class="flagged_post">
-  <h5>The following post might contain misleading information about the COVID-19 testing. Please refer to our resources for more information.</h5>
-  <a href="https://www.nhs.uk/conditions/coronavirus-covid-19/">NHS - Coronavirus </a><br>
-  <a href="https://www.cdc.gov/coronavirus/2019-ncov/index.html">CDC - Coronavirus</a>
+  <h5 class="flagged_post">The following post might contain misleading information about the COVID-19 testing. Please refer to our resources for more information.</h5>
+  <a class="resources" href="https://www.nhs.uk/conditions/coronavirus-covid-19/">NHS - Coronavirus </a><br>
+  <a class="resources" href="https://www.cdc.gov/coronavirus/2019-ncov/index.html">CDC - Coronavirus</a>
 </div>
 {% endif %}
-<center><a class="post_username" href="{{ url_for('user_profile', username=post.by_user) }}">
-  {{ post.by_user }}
-</a></center>
-<h5 class="post_title">{{ post.title }}</h5>
 {{ post.content }}<br/>
 <button type="button" class="report_button" data-toggle="modal" data-target="#reportModal{{ post.ID }}">Report</button>
 </div>
