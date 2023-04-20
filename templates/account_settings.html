@@ -22,12 +22,32 @@
     {% endif %}
     {% endif %}
 </div>
-<center><h1>Hello, {{session.username}}</h1></center>
-<center><h2>Account Management</h2></center>
-<div class="container-fluid">
+<div class="container-fluid create-post">
+<div class="row h-500">
+    <div class="col-2 shadow p-3 mb-5 rounded acc_snippet">
+        <b>Display name:</b> {{ user.username }}<br>
+        <b>User e-mail:</b> {{ user.email }}<br>
+        <b>Total posts:</b> {{ post_count }} <br>
+        {% if user.whitelisted == "yes" %}
+        <b>Your account is whitelisted!</b>
+        {% endif %}
+        {% if user.blacklisted == "yes" %}
+        <b>Your account is blacklisted!</b>
+        {% endif %}
+        {% if user.user_type == "admin" %}
+        <b>You have admin privileges.</b>
+        {% endif %}
+    </div>
+    <div class="col-8 text-center">
+    <center><h2 class="profile_header">ACCOUNT MANAGEMENT</h2></center><br>
+    <center><h1>Hello, {{session.username}}</h1></center>
+    </div>
+  </div>
+  </div>
+<div class="container-fluid col-4 settings">
     <div class="row text-center">
         <div class="col">
-        <h2>Update your password</h2>
+        <h2 class="settings_header">UPDATE PASSWORD</h2>
         <form action="{{ url_for('password_update') }}" method="POST" id="acc_form">
             <a>Current Password: </a><br>
             <input type="password" placeholder="********" name="old_pass" style="width: 300px" required/><br>
@@ -39,9 +59,9 @@
         </form>
         </div>
         <div class="col">
-        <h2>Update your e-mail</h2>
+        <h2 class="settings_header">UPDATE E-MAIL</h2>
         <form action="{{ url_for('email_update') }}" method="POST" id="acc_form">
-            <a>Current e-mail: {{user.email}}</a><br>
+            <h5>Current e-mail: {{user.email}}</h5><br>
             <a>New e-mail</a><br>
             <input type="text" placeholder="email@gmail.com" name="new_email" style="width: 300px" required/><br>
             <a>Confirm New e-mail</a><br>
