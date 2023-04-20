@@ -2,55 +2,85 @@
 {% include "nav.html" %}
 {% block content %}{% endblock %}
 
-<center><h1>{{ user.username }}</h1></center>
+<center>
+  <div class="user_profile">
+  <h1 class="profile_header">USER PROFILE</h1>
+  <h1>{{ user.username }}</h1>
+  </div>
+</center>
 
 <div class="container-fluid">
     <div class="row h-500">
     </div>
-    {% for user_post in user_posts %}
-    <div class="mx-auto posts p-3 mb-5 rounded post_display">
-      {% if user_post.blacklisted == "yes" %}
-      <h5>The following account has committed repeated violations.</h5>
-      {% endif %}
-      {% if user_post.flag_covid == "yes" %}
-      <div class="flagged_post">
-        <h5>The following post might contain misleading information about the COVID-19 pandemic. Please refer to our resources for more information.</h5>
-        <a href="https://www.nhs.uk/conditions/coronavirus-covid-19/">NHS - Coronavirus </a><br>
-        <a href="https://www.cdc.gov/coronavirus/2019-ncov/index.html">CDC - Coronavirus</a>
+    {% for post in user_posts %}
+    <div class="mx-auto post_username p-3">
+      <img src="../static/assets/default_icon.png" style="width:45px"><a class="post_username" href="{{ url_for('user_profile', username=post.by_user) }}">
+        {{ post.by_user }}
+      </a>
+    </div>
+    <div class="mx-auto posts p-3 mb-5 post_display">
+    {% if post.blacklisted == "yes" %}
+    <center>
+      <div class="blacklist_msg">
+      <img src="../static/assets/red-alert-icon.png" style="width:30px">
+      <h5 class="acc_blacklist">The following account has been found to be posting malicious posts repeatedly.</h5>
       </div>
-      {% endif %}
-      {% if user_post.flag_vaccine == "yes" %}
-      <div class="flagged_post">
-        <h5>The following post might contain misleading information about the COVID-19 vaccines. Please refer to our resources for more information.</h5>
-        <a href="https://www.nhs.uk/conditions/coronavirus-covid-19/">NHS - Coronavirus </a><br>
-        <a href="https://www.cdc.gov/coronavirus/2019-ncov/index.html">CDC - Coronavirus</a>
-      </div>
-      {% endif %}
-      {% if user_post.flag_cures == "yes" %}
-      <div class="flagged_post">
-        <h5>The following post might contain misleading information about the COVID-19 cures. Please refer to our resources for more information.</h5>
-        <a href="https://www.nhs.uk/conditions/coronavirus-covid-19/">NHS - Coronavirus </a><br>
-        <a href="https://www.cdc.gov/coronavirus/2019-ncov/index.html">CDC - Coronavirus</a>
-      </div>
-      {% endif %}
-      {% if user_post.flag_tests == "yes" %}
-      <div class="flagged_post">
-        <h5>The following post might contain misleading information about the COVID-19 testing. Please refer to our resources for more information.</h5>
-        <a href="https://www.nhs.uk/conditions/coronavirus-covid-19/">NHS - Coronavirus </a><br>
-        <a href="https://www.cdc.gov/coronavirus/2019-ncov/index.html">CDC - Coronavirus</a>
-      </div>
-      {% endif %}
-        {% if user_post.flagged == "yes" %}
-        <div class="flagged_post">
-          <h5>The following post might contain misleading information about the COVID-19 pandemic. Please refer to our resources for more information.</h5>
-          <a href="https://www.nhs.uk/conditions/coronavirus-covid-19/">NHS - Coronavirus </a><br>
-          <a href="https://www.cdc.gov/coronavirus/2019-ncov/index.html">CDC - Coronavirus</a>
-        </div>
-        {% endif %}
-    <h4 class="post_username">{{ user_post.by_user }}</h4>
-    <h5 class="post_title">{{ user_post.title }}</h5>
-    {{ user_post.content }}<br/>
+    </center>
+    {% endif %}
+    {% if post.flag_covid == "yes" %}
+    <div class="flagged_post">
+      <h5 class="flagged_post">The following post might contain misleading information about the COVID-19 pandemic. Please refer to our resources for more information.</h5>
+      <a class="resources" href="https://www.nhs.uk/conditions/coronavirus-covid-19/">NHS</a>
+      <a class="resources" href="https://www.cdc.gov/coronavirus/2019-ncov/index.html">CDC</a>
+    </div>
+    {% endif %}
+    {% if post.flag_vaccine == "yes" %}
+    <div class="flagged_post">
+      <h5 class="flagged_post">The following post might contain misleading information about the COVID-19 vaccines. Please refer to our resources for more information.</h5>
+      <a class="resources" href="https://www.nhs.uk/conditions/coronavirus-covid-19/">NHS</a>
+      <a class="resources" href="https://www.cdc.gov/coronavirus/2019-ncov/index.html">CDC</a>
+    </div>
+    {% endif %}
+    {% if post.flag_cures == "yes" %}
+    <div class="flagged_post">
+      <h5 class="flagged_post">The following post might contain misleading information about the COVID-19 cures. Please refer to our resources for more information.</h5>
+      <a class="resources" href="https://www.nhs.uk/conditions/coronavirus-covid-19/">NHS</a>
+      <a class="resources" href="https://www.cdc.gov/coronavirus/2019-ncov/index.html">CDC</a>
+    </div>
+    {% endif %}
+    {% if post.flag_tests == "yes" %}
+    <div class="flagged_post">
+      <h5 class="flagged_post">The following post might contain misleading information about the COVID-19 testing. Please refer to our resources for more information.</h5>
+      <a class="resources" href="https://www.nhs.uk/conditions/coronavirus-covid-19/">NHS</a>
+      <a class="resources" href="https://www.cdc.gov/coronavirus/2019-ncov/index.html">CDC</a>
+    </div>
+    {% endif %}
+    <br>
+    <h5>{{ post.content }}</h5>
+    <button type="button" class="report_button" data-toggle="modal" data-target="#reportModal{{ post.ID }}">Report</button>
     </div>
     <br/>
+    <div class="modal fade" id="reportModal{{ post.ID }}" tabindex="-1" role="dialog" aria-labelledby="reportModalLabel{{ post.ID }}">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="reportModalLabel{{ post.ID }}">Report Post</h5>
+            <button class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form method="post" action="{{ url_for('post_report', post_ID=post.ID) }}">
+              <input type="hidden" name="post_ID" value="{{ post.ID }}">
+              <div class="form-group">
+                <label for="report_message">Report Message:</label>
+                <textarea class="form-control" id="report_message" name="report_message"></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
     {% endfor %}
 </div>

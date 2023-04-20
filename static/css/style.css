@@ -223,3 +223,12 @@ padding-top: 20px;
   color: darkblue;
   font-size: 16px;
 }
+.user_profile {
+  background-color: #ffffff;
+  padding-bottom: 5px;
+}
+.profile_header {
+  background-color: #ff8300;
+  width: 40%;
+  border-radius: 8px;
+}
