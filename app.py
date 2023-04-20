@@ -146,47 +146,46 @@ def flag_cures_misinformation(text):
 @app.route("/post_submit", methods=['post'])
 def post_submit():
     post_content = request.form['content']
-    title = request.form['title']
     user = session['username']  
 
     list=query_db('SELECT * FROM users WHERE username = ?', [session['username']], True)
 
     if list['whitelisted'] == "yes":
-        insert_db('INSERT INTO posts (title, content, by_user) VALUES (?, ?, ?)', (title, post_content, user))
+        insert_db('INSERT INTO posts (content, by_user) VALUES (?, ?)', (post_content, user))
         return redirect(url_for('posts'))
 
     if list['blacklisted'] == "yes":
         if flag_covid_misinformation(post_content):
-            insert_db('INSERT INTO posts (title, content, by_user, flag_covid, blacklisted) VALUES (?, ?, ?, ?, ?)', (title, post_content, user, "yes", "yes"))
+            insert_db('INSERT INTO posts (content, by_user, flag_covid, blacklisted) VALUES (?, ?, ?, ?)', (post_content, user, "yes", "yes"))
             return redirect(url_for('posts'))
         elif flag_vaccine_misinformation(post_content):
-            insert_db('INSERT INTO posts (title, content, by_user, flag_vaccine, blacklisted) VALUES (?, ?, ?, ?, ?)', (title, post_content, user, "yes", "yes"))
+            insert_db('INSERT INTO posts (content, by_user, flag_vaccine, blacklisted) VALUES (?, ?, ?, ?)', (post_content, user, "yes", "yes"))
             return redirect(url_for('posts'))
         elif flag_tests_misinformation(post_content):
-            insert_db('INSERT INTO posts (title, content, by_user, flag_tests, blacklisted) VALUES (?, ?, ?, ?, ?)', (title, post_content, user, "yes", "yes"))
+            insert_db('INSERT INTO posts (content, by_user, flag_tests, blacklisted) VALUES (?, ?, ?, ?)', (post_content, user, "yes", "yes"))
             return redirect(url_for('posts'))
         elif flag_cures_misinformation(post_content):
-            insert_db('INSERT INTO posts (title, content, by_user, flag_cures, blacklister) VALUES (?, ?, ?, ?, ?)', (title, post_content, user, "yes", "yes"))
+            insert_db('INSERT INTO posts (content, by_user, flag_cures, blacklisted) VALUES (?, ?, ?, ?)', (post_content, user, "yes", "yes"))
             return redirect(url_for('posts'))
         else:
-            insert_db('INSERT INTO posts (title, content, by_user, blacklisted) VALUES (?, ?, ?, ?)', (title, post_content, user, "yes"))
+            insert_db('INSERT INTO posts (content, by_user, blacklisted) VALUES (?, ?, ?)', (post_content, user, "yes"))
             return redirect(url_for('posts'))
 
 
     if flag_covid_misinformation(post_content):
-        insert_db('INSERT INTO posts (title, content, by_user, flag_covid) VALUES (?, ?, ?, ?)', (title, post_content, user, "yes"))
+        insert_db('INSERT INTO posts (content, by_user, flag_covid) VALUES (?, ?, ?)', (post_content, user, "yes"))
         return redirect(url_for('posts'))
     elif flag_vaccine_misinformation(post_content):
-        insert_db('INSERT INTO posts (title, content, by_user, flag_vaccine) VALUES (?, ?, ?, ?)', (title, post_content, user, "yes"))
+        insert_db('INSERT INTO posts (content, by_user, flag_vaccine) VALUES (?, ?, ?)', (post_content, user, "yes"))
         return redirect(url_for('posts'))
     elif flag_tests_misinformation(post_content):
-        insert_db('INSERT INTO posts (title, content, by_user, flag_tests) VALUES (?, ?, ?, ?)', (title, post_content, user, "yes"))
+        insert_db('INSERT INTO posts (content, by_user, flag_tests) VALUES (?, ?, ?)', (post_content, user, "yes"))
         return redirect(url_for('posts'))
     elif flag_cures_misinformation(post_content):
-        insert_db('INSERT INTO posts (title, content, by_user, flag_cures) VALUES (?, ?, ?, ?)', (title, post_content, user, "yes"))
+        insert_db('INSERT INTO posts (content, by_user, flag_cures) VALUES (?, ?, ?)', (post_content, user, "yes"))
         return redirect(url_for('posts'))
     else:
-        insert_db('INSERT INTO posts (title, content, by_user) VALUES (?, ?, ?)', (title, post_content, user))
+        insert_db('INSERT INTO posts (content, by_user) VALUES (?, ?)', (post_content, user))
         return redirect(url_for('posts'))
 
 @app.route("/password_update", methods=['post'])
