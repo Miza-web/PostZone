@@ -47,7 +47,7 @@
 <div class="container-fluid col-4 settings">
     <div class="row text-center">
         <div class="col">
-        <h2 class="settings_header">UPDATE PASSWORD</h2>
+        <h4 class="settings_header">UPDATE PASSWORD</h4>
         <form action="{{ url_for('password_update') }}" method="POST" id="acc_form">
             <a>Current Password: </a><br>
             <input type="password" placeholder="********" name="old_pass" style="width: 300px" required/><br>
@@ -59,7 +59,7 @@
         </form>
         </div>
         <div class="col">
-        <h2 class="settings_header">UPDATE E-MAIL</h2>
+        <h4 class="settings_header">UPDATE E-MAIL</h4>
         <form action="{{ url_for('email_update') }}" method="POST" id="acc_form">
             <h5>Current e-mail: {{user.email}}</h5><br>
             <a>New e-mail</a><br>

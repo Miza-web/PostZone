@@ -235,9 +235,11 @@ padding-top: 20px;
 .admin_link {
   background-color: #ff8300;
   color: black;
-  font-size: 24px;
+  font-size: 20px;
   border-radius: 8px;
-  padding: 4px;
+  padding: 6px;
+  margin-right: 6px;
+  margin-left: 6px;
 }
 .database {
   padding-top: 8px;
