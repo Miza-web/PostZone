@@ -124,10 +124,10 @@ def account_settings():
     user=query_db('SELECT * FROM users WHERE username = ?', [session['username']], True)
     return render_template("account_settings.html", user = user)
 
-covid_pattern = r"(covid|pandemic|coronavirus|virus|5g|face mask).*(hoax|fake|autism|doesn't exist|bioweapon|manmade|engineered|simulation|surveillance)"
-vaccine_pattern = r"(vaccine|pfizer|moderna|novavax).*(autism|fake|hoax|doesn't work|don't work|alter dna|microchip|kills|miscarriage|fail)"
+covid_pattern = r"(covid|pandemic|coronavirus|virus|5g|face mask|SARS-CoV-2|omicron|delta|alpha).*(hoax|fake|autism|doesn't exist|bioweapon|manmade|engineered|simulation|surveillance|chinese weapon)"
+vaccine_pattern = r"(vaccine|pfizer|moderna|novavax).*(autism|fake|hoax|doesn't work|don't work|dna|microchip|kills|miscarriage|fail|infects)"
 tests_pattern = r"(lateral flow|antigen|pcr).*(doesn't work|don't work|fake|hoax|false)"
-cures_pattern = r"(ivermectin|antibiotics|colloidal silver|garlic|miracle mineral solution|vitamin c).*(helps|cures|works|cure|covid)"
+cures_pattern = r"(ivermectin|antibiotics|colloidal silver|garlic|miracle mineral solution|vitamin c|essential oil|quercetin|bleach).*(helps|cures|works|cure|covid|treats|prevents)"
 
 
 def flag_covid_misinformation(text):
