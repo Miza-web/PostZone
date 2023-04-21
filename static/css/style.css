@@ -259,3 +259,15 @@ padding-top: 20px;
   padding: 4px;
   border-radius: 8px;
 }
+.user_warning {
+  background-color: rgb(250, 215, 215);
+  width: 40%;
+  border-radius: 8px;
+  font-weight: bold;
+}
+.user_trusted {
+  background-color: rgb(215, 250, 221);
+  width: 40%;
+  border-radius: 8px;
+  font-weight: bold;
+}

@@ -322,7 +322,9 @@ def user_profile(username):
     user = {
         'id': user_row[0],
         'username': user_row[1],
-        'email': user_row[3]
+        'email': user_row[3],
+        'blacklisted': user_row[6],
+        'whitelisted': user_row[5]
     } if user_row else None
 
     user_posts=query_db('SELECT * FROM posts WHERE by_user = ? ORDER BY created_at DESC', (username,))

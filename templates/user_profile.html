@@ -5,10 +5,21 @@
 <center>
   <div class="user_profile">
   <h1 class="profile_header">USER PROFILE</h1>
+  {% if user.blacklisted == "yes" %}
+  <div class="user_warning">
+  <img src="../static/assets/red-alert-icon.png" style="width: 30px">
+  <h5>THE FOLLOWING ACCOUNT HAS BEEN BLACKLISTED FOR REPEATED MISINFORMATION.</h5>
+  </div>
+  {% endif %}
+  {% if user.whitelisted == "yes" %}
+  <div class="user_trusted">
+  <img src="../static/assets/success-green-check-mark-icon.png" style="width: 30px">
+  <h5>THE FOLLOWING ACCOUNT HAS BEEN VERIFIED AS A TRUSTED SOURCE OF INFORMATION.</h5>
+  </div>
+  {% endif %}
   <h1>{{ user.username }}</h1>
   </div>
 </center>
-
 <div class="container-fluid">
     <div class="row h-500">
     </div>
