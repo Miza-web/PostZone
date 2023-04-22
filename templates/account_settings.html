@@ -61,10 +61,10 @@
         <div class="col">
         <h4 class="settings_header">UPDATE E-MAIL</h4>
         <form action="{{ url_for('email_update') }}" method="POST" id="acc_form">
-            <h5>Current e-mail: {{user.email}}</h5><br>
-            <a>New e-mail</a><br>
+            <h5>Current E-Mail: {{user.email}}</h5><br>
+            <a>New E-Mail</a><br>
             <input type="text" placeholder="email@gmail.com" name="new_email" style="width: 300px" required/><br>
-            <a>Confirm New e-mail</a><br>
+            <a>Confirm New E-Mail</a><br>
             <input type="text" placeholder="email@gmail.com" name="c_new_email" style="width: 300px" required/><br>
             <input type="submit" value="Apply Changes" />
         </form>
