@@ -151,7 +151,7 @@ def post_submit():
     list=query_db('SELECT * FROM users WHERE username = ?', [session['username']], True)
 
     if list['whitelisted'] == "yes":
-        insert_db('INSERT INTO posts (content, by_user) VALUES (?, ?)', (post_content, user))
+        insert_db('INSERT INTO posts (content, by_user, whitelisted) VALUES (?, ?, ?)', (post_content, user, "yes"))
         return redirect(url_for('posts'))
 
     if list['blacklisted'] == "yes":
