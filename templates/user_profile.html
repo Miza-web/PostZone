@@ -8,13 +8,13 @@
   {% if user.blacklisted == "yes" %}
   <div class="user_warning">
   <img src="../static/assets/red-alert-icon.png" style="width: 30px">
-  <h5>THE FOLLOWING ACCOUNT HAS BEEN BLACKLISTED FOR REPEATED MISINFORMATION.</h5>
+  <h5 style="font-weight: bold">THE FOLLOWING ACCOUNT HAS BEEN BLACKLISTED FOR REPEATED MISINFORMATION.</h5>
   </div>
   {% endif %}
   {% if user.whitelisted == "yes" %}
   <div class="user_trusted">
   <img src="../static/assets/success-green-check-mark-icon.png" style="width: 30px">
-  <h5>THE FOLLOWING ACCOUNT HAS BEEN VERIFIED AS A TRUSTED SOURCE OF INFORMATION.</h5>
+  <h5 style="font-weight: bold">THE FOLLOWING ACCOUNT HAS BEEN VERIFIED AS A TRUSTED SOURCE OF INFORMATION.</h5>
   </div>
   {% endif %}
   <h1>{{ user.username }}</h1>
@@ -30,14 +30,6 @@
       </a>
     </div>
     <div class="mx-auto posts p-3 mb-5 post_display">
-    {% if post.blacklisted == "yes" %}
-    <center>
-      <div class="blacklist_msg">
-      <img src="../static/assets/red-alert-icon.png" style="width:30px">
-      <h5 class="acc_blacklist">The following account has been found to be posting malicious posts repeatedly.</h5>
-      </div>
-    </center>
-    {% endif %}
     {% if post.flag_covid == "yes" %}
     <div class="flagged_post">
       <h5 class="flagged_post">The following post might contain misleading information about the COVID-19 pandemic. Please refer to our resources for more information.</h5>
