@@ -125,9 +125,9 @@ def account_settings():
     return render_template("account_settings.html", user = user)
 
 covid_pattern = r"(covid|pandemic|coronavirus|virus|5g|face mask|SARS-CoV-2|omicron|delta|alpha).*(hoax|fake|autism|doesn't exist|bioweapon|manmade|engineered|simulation|surveillance|chinese weapon)"
-vaccine_pattern = r"(vaccine|pfizer|moderna|novavax).*(autism|fake|hoax|doesn't work|don't work|dna|microchip|kills|miscarriage|fail|infects)"
+vaccine_pattern = r"(vaccine|pfizer|moderna|novavax|astrazeneca|janssen).*(autism|fake|hoax|doesn't work|don't work|dna|microchip|kills|miscarriage|fail|infects)"
 tests_pattern = r"(lateral flow|antigen|pcr).*(doesn't work|don't work|fake|hoax|false)"
-cures_pattern = r"(ivermectin|antibiotics|colloidal silver|garlic|miracle mineral solution|vitamin c|essential oil|quercetin|bleach).*(helps|cures|works|cure|covid|treats|prevents)"
+cures_pattern = r"(ivermectin|colloidal silver|garlic|miracle mineral solution|vitamin c|essential oil|quercetin|bleach).*(helps|cures|works|cure|covid|treats|prevents)"
 
 
 def flag_covid_misinformation(text):
