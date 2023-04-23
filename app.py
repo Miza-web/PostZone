@@ -1,21 +1,29 @@
 from sqlite3.dbapi2 import Cursor, connect
 from flask import Flask, config, jsonify, render_template, request, g, session, url_for, redirect
+import os
 from flask_mail import Mail, Message
 import sqlite3
 import re
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import redirect
+from os.path import join, dirname
+from dotenv import load_dotenv
+
+load_dotenv(join(dirname(__file__),  '.env'))
+
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'GvFVhSsCBsGu4ZPRhvDxzqZzDyiMT3oz'
-app.config['MAIL_SERVER'] = 'smtp.gmail.com'
-app.config['MAIL_PORT'] = 465
-app.config['MAIL_USE_SSL'] = True
-app.config['MAIL_USERNAME'] = 'your-email@gmail.com'
-app.config['MAIL_PASSWORD'] = 'your-email-password'
-app.config['MAIL_DEFAULT_SENDER'] = 'your-email@gmail.com'
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
+app.config['MAIL_SERVER'] = os.getenv('MAIL_SERVER')
+app.config['MAIL_PORT'] = os.getenv('MAIL_PORT')
+app.config['MAIL_USE_SSL'] = eval(os.getenv('MAIL_USE_SSL'))
+app.config['MAIL_USE_TLS'] = eval(os.getenv('MAIL_USE_TLS'))
+app.config['MAIL_USERNAME'] = os.getenv('MAIL_USERNAME')
+app.config['MAIL_PASSWORD'] = os.getenv('MAIL_PASSWORD')
+app.config['MAIL_DEFAULT_SENDER'] = os.getenv('MAIL_DEFAULT_SENDER')
+
 
 mail = Mail(app)
-DATABASE='database.db'
+DATABASE=os.getenv('DATABASE')
 
 
 @app.route("/")
@@ -109,7 +117,7 @@ def contact():
         subject = request.form['subject']
         message = request.form['message']
 
-        msg = Message(subject=subject, sender=email, recipients=['your-email@gmail.com'])
+        msg = Message(subject=subject, recipients=['contact@mmizera.co.uk'])
         msg.body = f"From: {name} ({email})\n\n{message}"
         mail.send(msg)
         return redirect(url_for('posts'))
